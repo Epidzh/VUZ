@@ -41,7 +41,7 @@ int main(void)
     string name = "Denis";
     Hello obj("Yegor");
     obj << 1;
-    obj.greeting<const char*>("Harry");
+    obj.greeting<const char*> ("Harry");
     obj.greeting(1);
     return 0;
 }
