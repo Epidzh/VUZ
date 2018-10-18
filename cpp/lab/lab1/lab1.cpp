@@ -1,24 +1,42 @@
 #include <iostream>
 #include <math.h>
-#include <algorithm>
 
 using namespace std;
 
 class Complex {
-  private:
+private:
 	double re, im;
-  public:
+public:
+	
 	Complex(double re_ = 0, double im_ = 0) : re(re_), im(im_){};
-	double real() { return re; }
-	double imag() { return im; }
-	double abs() { return sqrt(re * re + im * im); }
-	friend Complex operator+(Complex left, Complex right) {
+	
+	double real()
+	{
+		return re;
+	}
+	
+	double imag()
+	{
+		return im;
+	}
+
+	double abs()
+	{
+		return sqrt(re * re + im * im);
+	}
+
+	friend Complex operator+(Complex left, Complex right)
+	{
 		return Complex(left.re + right.re, left.im + right.im);
 	}
-	friend Complex operator-(Complex left, Complex right) {
+
+	friend Complex operator-(Complex left, Complex right)
+	{
 		return Complex(left.re - right.re, left.im - right.im);
 	}
-	friend Complex operator*(Complex left, Complex right) {
+
+	friend Complex operator*(Complex left, Complex right)
+	{
 		return Complex(left.re * right.re - left.im * right.im,
 					   left.im * right.re + left.re * right.im);
 	}
