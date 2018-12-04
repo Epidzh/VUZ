@@ -8,7 +8,9 @@
 
 #ifndef list_cpp
 #define list_cpp
+
 #include "list.h"
+#include <iostream>
 
 template<class T>
 List<T>::Node::Node(T data_) : data(data_), next(NULL), prev(NULL) {}
@@ -26,7 +28,7 @@ bool List<T>::Node::operator<(Node &other)
 }
 
 template<class T>
-List<T>::List() : root(NULL), end(NULL), length(0) {}
+List<T>::List() : root(NULL), length(0) {}
 
 template<class T>
 List<T>::~List()
@@ -39,7 +41,6 @@ List<T>::~List()
         curr = t;
     }
     root = NULL;
-    end = NULL;
     length = 0;
 }
 
@@ -48,12 +49,14 @@ void List<T>::push_back(T data_)
 {
     Node *new_node = new Node(data_);
     if (length == 0)
-        root = end = new_node;
+        root = new_node;
     else
     {
-        new_node->prev = end;
-        end->next = new_node;
-        end = new_node;
+        Node* curr = root;
+        while (curr->next)
+            curr = curr->next;
+        new_node->prev = curr;
+        curr->next = new_node;
     }
     length++;
 }
@@ -62,6 +65,14 @@ template<class T>
 void List<T>::sort()
 {
     root = MergeSort(root);
+    Node* curr_elem = root->next;
+    Node* prev_elem = root;
+    while (curr_elem)
+    {
+        curr_elem->prev = prev_elem;
+        prev_elem = curr_elem;
+        curr_elem = curr_elem->next;
+    }
 }
 
 template<class T>
@@ -116,10 +127,8 @@ typename List<T>::Node* List<T>::MergeSort(typename List<T>::Node *start_)
         return start_;
     typename List<T>::Node* first_half_start = start_;
     typename List<T>::Node* second_half_start = start_->next;
-    while (second_half_start)
+    while (second_half_start && second_half_start->next)
     {
-        if (!second_half_start->next)
-            break;
         second_half_start = second_half_start->next->next;
         start_ = start_->next;
     }
@@ -130,5 +139,6 @@ typename List<T>::Node* List<T>::MergeSort(typename List<T>::Node *start_)
     second_half_start = MergeSort(second_half_start);
     return mergeLists(first_half_start, second_half_start);
 }
+
 
 #endif

@@ -59,7 +59,7 @@ void test(vector<INT> v) {
 }
 
 int main() {
-    int n = 1000, m = 1000;
+    int n = 5, m = 1000;
     srand(time(0));
     vector<INT> v1, v2, v3, v4;
     for (int i = 0; i < n; i++) {

@@ -29,7 +29,6 @@ private:
     };
     
     Node* root;
-    Node* end;
     int length;
 public:
     

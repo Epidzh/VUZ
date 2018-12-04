@@ -1,9 +1,11 @@
+//g++  5.4.0
+// https://pastebin.com/kxfZk8Sx
+//https://pastebin.com/CdQYYVdF
 #include <iostream>
-
-using namespace std;
+#include <time.h>
+//using namespace std;
 
 int main()
 {
-    cout << sizeof(double) << endl;
-    return 0;
+    std::cout << 10 << std::endl;
 }

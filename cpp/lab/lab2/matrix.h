@@ -31,7 +31,7 @@ private:
     int** elems;
     
 public:
-    Matrix(int cols_num, int rows_num)
+    Matrix(int cols_num, int rows_num) : rows(rows_num), cols(cols_num), elems(new )
     {
         
         rows = rows_num;
