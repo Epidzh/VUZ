@@ -54,11 +54,12 @@ public:
         bool operator!=(const iterator &it);
         bool operator==(const iterator &it);
         
-        // //
-        // iterator operator+=(int);
-        // bool operator>(const iterator&);
-        // bool operator>=(const iterator&);
-        // //
+        // necessary for libc++ library
+        iterator operator+=(int);
+        bool operator>(const iterator&);
+        bool operator>=(const iterator&);
+        //
+        
         int operator-(const iterator &n);
         
         T& operator*() { return node->data; }
@@ -137,13 +138,13 @@ typename List<T>::iterator List<T>::iterator::operator+(int index)
 }
 
 
-// template <class T>
-// typename List<T>::iterator List<T>::iterator::operator+=(int t)
-// {
-//     while (t-- > 0)
-//         node = node->next;
-//     return *this;
-// }
+template <class T>
+typename List<T>::iterator List<T>::iterator::operator+=(int t)
+{
+ while (t-- > 0)
+     node = node->next;
+ return *this;
+}
 
 
 template <class T>
@@ -163,18 +164,18 @@ bool List<T>::iterator::operator<(const iterator &it)
 }
 
 
-// template <class T>
-// bool List<T>::iterator::operator>(const iterator &it)
-// {
-//     return node->data > it.node->data;
-// }
+template <class T>
+bool List<T>::iterator::operator>(const iterator &it)
+{
+    return node->data > it.node->data;
+}
 
 
-// template <class T>
-// bool List<T>::iterator::operator>=(const iterator &it)
-// {
-//     return node->data >= it.node->data;
-// }
+template <class T>
+bool List<T>::iterator::operator>=(const iterator &it)
+{
+    return node->data >= it.node->data;
+}
 
 
 template <class T>
