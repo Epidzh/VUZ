@@ -1,3 +1,11 @@
+//
+//  main.cpp
+//  dm_fibonacci
+//
+//  Created by Сергей Петров on 08/12/2018.
+//  Copyright © 2018 SergioPetrovx. All rights reserved.
+//
+
 #include <iostream>
 #include <vector>
 
