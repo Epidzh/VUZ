@@ -43,7 +43,6 @@ public:
         p = p_;
         elems.assign(n, vector<T> (m, 0));
         for (int i = 0; i < elems_.size(); i++)
-            //elems[i / n][i % m] = elems_[i];
             elems[i / m][i % m] = elems_[i];
     }
     
