@@ -106,11 +106,18 @@ void List<T>::push(const T& data)
     Node *new_node = new Node(data);
     if (last)
     {
-        last->next = new_node;
-        new_node->prev = last;
-        last = new_node;
+        new_node->prev = last->prev;
+        last->prev->next = new_node;
+        new_node->next = last;
+        last->prev = new_node;
     }
-    else root = last = new_node;
+    else
+    {
+        last = new Node(T(INT_MIN));
+        root = new_node;
+        root->next = last;
+        last->prev = root;
+    }
 }
 
 
@@ -181,7 +188,7 @@ bool List<T>::iterator::operator>=(const iterator &it)
 template <class T>
 typename List<T>::iterator& List<T>::iterator::operator++()
 {
-    node = node->next;
+    node = (node) ? node->next : node;
     return *this;
 }
 
@@ -189,7 +196,7 @@ typename List<T>::iterator& List<T>::iterator::operator++()
 template <class T>
 typename List<T>::iterator& List<T>::iterator::operator--()
 {
-    node = node->prev;
+    node = (node) ? node->prev : node;
     return *this;
 }
 

@@ -54,8 +54,10 @@ int main() {
     long long int ans = 0;
     
     for (int i = 0; i < N; i++) {
-        ans = ans * 2 + (int)ar[i]->isInside(i * 2 - 1, i * 2 - 1);
+            ans = ans * 2 + (int)ar[i]->isInside(i * 2 - 1, i * 2 - 1);
         // count boundary points as inside points
+        if (dynamic_cast<Circle*>(ar[i]))
+            cout << "Circle!" << endl;
     }
     if (ans != 562766701483008) {
         cout << "testing fail" << endl;
