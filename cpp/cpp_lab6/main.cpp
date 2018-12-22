@@ -1,21 +1,30 @@
-//
-//  main.cpp
-//  cpp_lab6
-//
-//  Created by Сергей Петров on 14/12/2018.
-//  Copyright © 2018 SergioPetrovx. All rights reserved.
-//
-
 #include <iostream>
-#include <string.h>
-
 using namespace std;
 
-int main(int argc, const char * argv[])
+class myString
 {
+private:
+    const char* str;
+    int len;
+public:
     
-    char buf1[] = "123123", buf2[] = "123123aszzzz";
-    int buf3[] = {1, 2, 3, 4};
-    setZero(buf1, buf2, buf3);
+    myString(char *s)
+    {
+        str = s;
+        while (strcmp(s++, "\0"))
+            len++;
+    }
+    
+    const char* begin() { return str; }
+    
+    const char* end() { return str+len; }
+};
+
+int main() {
+    myString str("Some Interesting String");
+    for(auto i : str){
+        cout<<i;
+    }
+    cout<<endl;
     return 0;
 }

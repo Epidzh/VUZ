@@ -10,6 +10,8 @@
 #include "main.h"
 #include "max_flow.h"
 
+using namespace std;
+
 int main(int argc, const char * argv[]) {
     
     int n = 0;

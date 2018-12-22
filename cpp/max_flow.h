@@ -32,7 +32,7 @@ bool bfs_find_way(Matrix &G, Matrix &F, vector<int> &parent, vector<bool> &visit
             if ((!visited[i]) && (G[v][i] - F[v][i] > 0))
             {
                 q.push(i);
-                visited[i] = 1;
+                visited[i] = true;
                 parent[i] = v;
             }
         }

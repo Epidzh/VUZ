@@ -86,7 +86,7 @@ public:
 };
 
 
-int main()
+int main() // seems it's not working! Test: 23 31 0 1 7687688 274876858367
 {
     long long a, b, A, B, power, p;
     cout << "Input a, b: ";

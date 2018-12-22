@@ -13,8 +13,8 @@
 using namespace std;
 typedef vector<vector<int> > Graph;
 
-char *input_file_name = "/Users/epidzhx/Library/Autosave Information/cpp_solutions/dm_max_path/tests/test8.in";
-char *output_file_name = "/Users/epidzhx/Library/Autosave Information/cpp_solutions/dm_max_path/tests/test8.out";
+char *input_file_name = "/Users/epidzhx/Staff/VUZ/cpp/dm_max_path/tests/test8.in";
+char *output_file_name = "/Users/epidzhx/Staff/VUZ/cpp/dm_max_path/tests/test8.out";
 
 void relax(Graph &G, int v, vector<int> &d)
 {
