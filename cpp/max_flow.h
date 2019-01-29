@@ -1,11 +1,3 @@
-//
-//  max_flow.h
-//  cpp_solutions
-//
-//  Created by e1ndalt on 20/10/2018.
-//  Copyright © 2018 SergioPetrovx. All rights reserved.
-//
-
 #ifndef max_flow_h
 #define max_flow_h
 

@@ -16,7 +16,5 @@
 
 //using namespace std;
 
-char *input_file_name = "/Users/epidzhx/Library/Autosave Information/cpp_solutions/dm_max_matching/tests/test1.in";
-char *output_file_name = "/Users/epidzhx/Library/Autosave Information/cpp_solutions/dm_max_matching/tests/test1.out";
 
 #endif /* main_h */

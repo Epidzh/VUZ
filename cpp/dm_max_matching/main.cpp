@@ -1,14 +1,11 @@
-//
-//  main.cpp
-//  cpp_solutions
-//
-//  Created by Сергей Петров on 21/10/2018.
-//  Copyright © 2018 SergioPetrovx. All rights reserved.
-//
+char *input_file_name = "/Users/epidzhx/Staff/VUZ/cpp/dm_max_matching/tests/test1.in";
+char *output_file_name = "/Users/epidzhx/Staff/VUZ/cpp/dm_max_matching/tests/test1.out";
+#include <iostream>
+#include <string>
+#include <vector>
+#include <queue>
 
-#include "main.h"
 #include "max_flow.h"
-#include "kuhn.h"
 
 int main()
 {
@@ -20,7 +17,6 @@ int main()
     
     //init Matrix
     Matrix mc(size, vector<long> (size));
-    List mc2(n + m);
     
     for (int i = 0; i < n; i++)
     {
@@ -31,8 +27,6 @@ int main()
             int v;
             cin >> v;
             mc[i][n+v] = 1;
-            mc2[i].push_back(n+v);
-            mc2[n+v].push_back(i);
         }
     }
     for (int i = 0; i < n; i++)
@@ -51,13 +45,6 @@ int main()
         f_power += Flow[i][size-1];
     cout << "Flow answer: " << f_power;
     if (f_power == ans)
-        cout << " Correct" << endl;
-    else
-        cout << " Incorrect" << endl;
-    
-    int kuhn_max_matching = Kuhn(mc2, n, m);
-    cout << "Kuhn answer: " << kuhn_max_matching;
-    if (kuhn_max_matching == ans)
         cout << " Correct" << endl;
     else
         cout << " Incorrect" << endl;
