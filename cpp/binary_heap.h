@@ -9,6 +9,8 @@
 #ifndef binary_heap_h
 #define binary_heap_h
 
+#include <pair>
+
 class Heap {
     static const int SIZE = 1000; // максимальный размер кучи
     std::pair<int, int> *elems;         // указатель на массив кучи

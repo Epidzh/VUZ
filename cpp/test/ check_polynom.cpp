@@ -2,10 +2,12 @@
 
 using namespace std;
 
+
 void transform(vector<int> &a, vector<int> &c, int p)
 {
     
 }
+
 
 void min_pow(vector<int> &a, vector<int> &b, int p, int pow)
 {
@@ -24,6 +26,7 @@ void min_pow(vector<int> &a, vector<int> &b, int p, int pow)
     }
 }
 
+
 void find_and_print(vector<int> &a, vector<int> &b, int p, int pow, int v = 0)
 {
     for (int i = 0; i < p; i++)
@@ -34,12 +37,6 @@ void find_and_print(vector<int> &a, vector<int> &b, int p, int pow, int v = 0)
         min_pow(a, b, p, pow);
     }
 }
-
-
-// ostream& operator<<(ostream& os, vector<int> &arr)
-// {
-//     os << 
-// }
 
 
 int main()

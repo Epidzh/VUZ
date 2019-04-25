@@ -1,6 +1,5 @@
 #include <iostream>
  #include <time.h>
- //using namespace std;
  #include <vector>
 
  using namespace std;
@@ -22,7 +21,6 @@
         int num = ans[m - 1];
         for (int i = m - 1; i >= 0; i--)
             ans[i] = (i > 0) ? (ans[i-1] + num * a[i]) % n : (0 + num * a[0]) % n;
-        //cout << i << ": " << first << " " << second << endl;
         for (int i = 0; i < m; i++)
             if (b[i] != ans[i])
                 continue;

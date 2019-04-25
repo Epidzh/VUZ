@@ -59,14 +59,11 @@ Matrix Ford_Fulkerson(Matrix &G, int n, int start, int end)
             t = end;
             while (t != start)
             {
-                //cout << t << " ";
                 int u = parent[t];
                 F[u][t] += curr_max_flow;
                 F[t][u] -= curr_max_flow;
                 t = u;
             }
-            //cout << "[" << curr_max_flow << "]" << endl;
-            //max_flow_sum += curr_max_flow;
         }
     }
     return F;
