@@ -26,6 +26,6 @@ void dfs(std::vector<std::vector<int> > &, std::vector<bool> &, int);
 void bfs(std::vector<std::vector<int> > &, std::vector<bool> &, int);
 std::vector<int> dijkstra(std::vector<std::vector<node> > &, int);
 std::vector<edge> kruskal(std::vector<edge> &, int);
-std::vector<int> prim(std::vector<std::vector<int> > &, int);
+std::vector<edge> prim(std::vector<std::vector<int> > &, int, int);
 
 #endif

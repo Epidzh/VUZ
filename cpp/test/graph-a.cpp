@@ -76,3 +76,32 @@ std::vector<edge> kruskal(std::vector<edge> &Graph, int n) {
     }
     return ans;
 }
+
+std::vector<edge> prim(std::vector<std::vector<int> > &Graph, int n, int INF){
+    std::vector<bool> visit (n, false);
+    std::vector<int> parent (n, NULL);
+    int s = 1;
+    std::vector<int> D (n, INF);
+    D[s] = 0;
+    std::vector<edge> ans;
+    
+    for (int i = 0; i < n; i++) {
+        int v = -1;
+        for (int j = 1; j < n; j++)
+            if (visit[j] == false && (v == -1 || D[j] < D[v]))
+                v = j;
+        if (v == -1)
+            break;
+        visit[v] = true;
+        for (int j = 0; j < Graph[v].size(); j++){
+            if (Graph[j][v] < D[j] && visit[j] == false){
+                D[j] = Graph[j][v];
+                parent[j] = v;
+            }
+        }
+    }
+    for (int i = 0; i < n; i++)
+        if (parent[i])
+            ans.push_back(edge(i, parent[i], Graph[i][parent[i]]));
+    return ans;
+}

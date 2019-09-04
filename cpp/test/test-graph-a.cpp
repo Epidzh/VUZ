@@ -51,8 +51,8 @@ int main()
     
     Graph2[5].push_back(node(3, 10));
     dist = dijkstra(Graph2, 1);
-    for (int i = 1; i < dist.size(); i++)
-        cout << dist[i] << " ";
+//    for (int i = 1; i < dist.size(); i++)
+//        cout << dist[i] << " ";
     
     vector<edge> Graph3;
     Graph3.push_back(edge(1, 2, 3));
@@ -65,15 +65,14 @@ int main()
     for (int i = 0; i < tree.size(); i++)
         cout << tree[i].start << " " << tree[i].end << " " << tree[i].weight << endl;
 
-    int INF = 0; // ПРИМ - не дописан
+    int INF = 1000000; // ПРИМ - не дописан
     vector<vector<int> > Graph4(n, vector<int> (n, INF));
     for (int i = 0; i < n; i++)
         for (int j = 0; j < Graph2[i].size(); j++)
-            Graph4[i][Graph2[i][j].num] = Graph2[i][j].weight;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++)
-            cout << Graph4[i][j] << " ";
-        cout << endl;
-    }
+                Graph4[i][Graph2[i][j].num] = Graph2[i][j].weight;
+    
+    tree = prim(Graph4, n, INF);
+    for (int i = 0; i < tree.size(); i++)
+        cout << tree[i].start << " " << tree[i].end << " " << tree[i].weight << endl;
     return 0;
 }
