@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "maths/main.cpp"
-            timestampString = "590011351.67773"
+            timestampString = "590055458.808365"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
             landmarkName = "m_sin(double x, double EPS = 0.00000001)"
             landmarkType = "9">
          </BreakpointContent>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "maths/main.cpp"
-            timestampString = "590011351.6783431"
+            timestampString = "590055458.808427"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
             landmarkName = "m_lg(double x, double EPS = 0.000001)"
             landmarkType = "9">
          </BreakpointContent>
@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "maths/main.cpp"
-            timestampString = "590011351.678708"
+            timestampString = "590055458.808473"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "m_ln(double x, double EPS = 0.000001)"
             landmarkType = "9">
          </BreakpointContent>
@@ -250,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "maths/main.cpp"
-            timestampString = "590011351.6790169"
+            timestampString = "590055458.808515"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
             landmarkName = "m_ln(double x, double EPS = 0.000001)"
             landmarkType = "9">
          </BreakpointContent>

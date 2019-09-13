@@ -1,7 +1,6 @@
 #include <iostream>
 #include <math.h>
 
-static const double EPS = 0.000001;
 static const double ln_10 = log(10);
 
 //template<class T>
@@ -75,6 +74,8 @@ double m_ln(double x, double EPS = 0.000001)
 
 double m_lg(double x, double EPS = 0.000001)
 {
+    if (x <= 0)
+        return NAN;
     double ans = 0;
     if (fabs(x) > 1)
     {
@@ -88,24 +89,28 @@ double m_lg(double x, double EPS = 0.000001)
     return ans;
 }
 
+double m_exp(double x, double EPS = 0.000001)
+{
+    double ans = 0;
+    double elem = 1;
+    int n = 0;
+    while (elem > EPS)
+    {
+        ans += elem;
+        n++;
+        elem *= x / n;
+    }
+    return ans;
+}
+
 int main()
 {
     
     double arg;
-//    for (arg = 0; arg < 100; arg += 0.01)
-//    {
-//        std::cout << arg << std::endl;
-//        if (sin(arg) > m_sin(arg) + EPS)
-//            std::cout << "SIN! " << sin(arg) << " : " << m_sin(arg) << std::endl;
-//        if (cos(arg) > m_cos(arg) + EPS)
-//            std::cout << "COS! " << cos(arg) << " : " << m_cos(arg) << std::endl;
-//        if (log10(arg) > m_lg(arg) + EPS)
-//            std::cout << "LOG! " << log10(arg) << " : " << m_lg(arg) << std::endl;
-//    }
     
-    std::cout << "Input sin arg: ";
+    std::cout << "Input exp arg: ";
     std::cin >> arg;
-    std::cout << "sin = " << sin(arg) << "; m_sin = " << m_sin(arg) << std::endl;
+    std::cout << "exp = " << exp(arg) << "; m_exp = " << m_exp(arg) << std::endl;
 
     std::cout << "Input cos arg: ";
     std::cin >> arg;
