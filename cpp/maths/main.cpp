@@ -107,7 +107,6 @@ int main()
 {
     
     double arg;
-    
     std::cout << "Input exp arg: ";
     std::cin >> arg;
     std::cout << "exp = " << exp(arg) << "; m_exp = " << m_exp(arg) << std::endl;
