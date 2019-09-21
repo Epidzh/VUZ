@@ -2,15 +2,22 @@
 #include <time.h>
 #include <thread>
 
+using namespace std;
+
 static const int N = 10000;
 static const int MIN_VAL = -10000;
 static const int MAX_VAL = 10000;
-
-using namespace std;
-
-mutex shelling_lock;
+static const unsigned THREADS_NUM = thread::hardware_concurrency();
 mutex counter_lock;
-static int counter = 0;
+volatile static int counter = 0;
+
+template<class T>
+void print(T arr[])
+{
+    for (int i = 0; i < N; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
 
 template<class T>
 void shell_sort(T arr[], int length)
@@ -53,6 +60,7 @@ void shell_sort_multithread(T* arr, int length)
             counter_lock.lock();
             counter++;
             counter_lock.unlock();
+            while (counter > THREADS_NUM);
             thread th(shelling<T>, cref(arr), step, j);
             th.detach();
         }
@@ -81,6 +89,7 @@ int main()
         arr2[i] = t;
     }
     
+//    print(arr1);
     unsigned long t = clock();
     shell_sort(arr1, N);
     cout << "One thread sort" << (check(arr1, N) ? " correct. " : "incorrect. ");
@@ -92,5 +101,7 @@ int main()
     cout << "Multithread sort" << (check(arr1, N) ? " correct. " : "incorrect. ");
     cout << "Time: " << (double)(clock() - t) / CLOCKS_PER_SEC << endl;
     
+//    print(arr1);
+//    print(arr2);
     return 0;
 }
