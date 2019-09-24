@@ -89,7 +89,6 @@ int main()
         arr2[i] = t;
     }
     
-//    print(arr1);
     unsigned long t = clock();
     shell_sort(arr1, N);
     cout << "One thread sort" << (check(arr1, N) ? " correct. " : "incorrect. ");
@@ -100,8 +99,6 @@ int main()
     shell_sort_thread.join();
     cout << "Multithread sort" << (check(arr1, N) ? " correct. " : "incorrect. ");
     cout << "Time: " << (double)(clock() - t) / CLOCKS_PER_SEC << endl;
-    
-//    print(arr1);
-//    print(arr2);
+
     return 0;
 }
