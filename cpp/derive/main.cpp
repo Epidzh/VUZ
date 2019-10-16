@@ -26,9 +26,19 @@ double f(double x)
     return 0;
 }
 
-double derive1(double (*f)(double), double point, double step)
+double derive1_center(double (*f)(double), double point, double step)
 {
     return (f(point + step + step) - f(point)) / (2*step);
+}
+
+double derive1_left(double (*f)(double), double point, double step)
+{
+    return (f(point + step) - f(point)) / step;
+}
+
+double derive1_right(double (*f)(double), double point, double step)
+{
+    return (f(point + step + step) - f(point + step)) / step;
 }
 
 double derive2(double (*f)(double), double point, double step)
@@ -41,7 +51,9 @@ int main(int argc, const char * argv[]) {
     double x = 0.2;
     double h = 0.2;
     double (*t)(double) = f;
-    cout << derive1(t, x, h) << endl;
-    cout << derive2(t, x, h) << endl;
+    cout << "First (center) = " << derive1_center(t, x, h) << endl;
+    cout << "First (left) = " << derive1_left(t, x, h) << endl;
+    cout << "First (right) = " << derive1_right(t, x, h) << endl;
+    cout << "Second = " << derive2(t, x, h) << endl;
     return 0;
 }

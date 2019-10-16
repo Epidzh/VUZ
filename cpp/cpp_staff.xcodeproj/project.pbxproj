@@ -25,6 +25,9 @@
 		A64801E92275F05D005A1B1C /* graph-a.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A64801E72275F05D005A1B1C /* graph-a.cpp */; };
 		A66B2A57232AC38900B4AE86 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A66B2A56232AC38900B4AE86 /* main.cpp */; };
 		A67FD3ED233DFA5C00B47F42 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A67FD3EC233DFA5C00B47F42 /* main.cpp */; };
+		A6D463D92349DF6B00F67D8A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A6D463D82349DF6B00F67D8A /* main.cpp */; };
+		A6D463DE2349F11D00F67D8A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6D463DD2349F11D00F67D8A /* GLUT.framework */; };
+		A6D463E02349F16400F67D8A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6D463DF2349F16400F67D8A /* OpenGL.framework */; };
 		A6E9F1E3232B85BE002BD3DB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A6E9F1E2232B85BE002BD3DB /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -182,6 +185,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		A6D463D42349DF6B00F67D8A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		A6E9F1DE232B85BE002BD3DB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -296,6 +308,10 @@
 		A67FD3EA233DFA5C00B47F42 /* derive */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = derive; sourceTree = BUILT_PRODUCTS_DIR; };
 		A67FD3EC233DFA5C00B47F42 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A6AB1215232254C60000B3B5 /* labs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = labs; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6D463D62349DF6B00F67D8A /* polynoms */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = polynoms; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6D463D82349DF6B00F67D8A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		A6D463DD2349F11D00F67D8A /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		A6D463DF2349F16400F67D8A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A6E9F1E0232B85BE002BD3DB /* den_cpp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = den_cpp; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6E9F1E2232B85BE002BD3DB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -420,6 +436,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6D463D32349DF6B00F67D8A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6D463DE2349F11D00F67D8A /* GLUT.framework in Frameworks */,
+				A6D463E02349F16400F67D8A /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A6E9F1DD232B85BE002BD3DB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -461,6 +486,7 @@
 				A66B2A55232AC38900B4AE86 /* maths */,
 				A6E9F1E1232B85BE002BD3DB /* den_cpp */,
 				A67FD3EB233DFA5C00B47F42 /* derive */,
+				A6D463D72349DF6B00F67D8A /* polynoms */,
 				1E090622217CBECC0010E86E /* Products */,
 				1E7D2D21219D9D03005E125D /* Frameworks */,
 			);
@@ -487,6 +513,7 @@
 				A66B2A54232AC38900B4AE86 /* maths */,
 				A6E9F1E0232B85BE002BD3DB /* den_cpp */,
 				A67FD3EA233DFA5C00B47F42 /* derive */,
+				A6D463D62349DF6B00F67D8A /* polynoms */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -611,6 +638,8 @@
 		1E7D2D21219D9D03005E125D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A6D463DF2349F16400F67D8A /* OpenGL.framework */,
+				A6D463DD2349F11D00F67D8A /* GLUT.framework */,
 				1E7D2D22219D9D03005E125D /* libncurses.tbd */,
 			);
 			name = Frameworks;
@@ -714,6 +743,14 @@
 				A67FD3EC233DFA5C00B47F42 /* main.cpp */,
 			);
 			path = derive;
+			sourceTree = "<group>";
+		};
+		A6D463D72349DF6B00F67D8A /* polynoms */ = {
+			isa = PBXGroup;
+			children = (
+				A6D463D82349DF6B00F67D8A /* main.cpp */,
+			);
+			path = polynoms;
 			sourceTree = "<group>";
 		};
 		A6E9F1E1232B85BE002BD3DB /* den_cpp */ = {
@@ -1016,6 +1053,23 @@
 			productReference = A6AB1215232254C60000B3B5 /* labs */;
 			productType = "com.apple.product-type.tool";
 		};
+		A6D463D52349DF6B00F67D8A /* polynoms */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6D463DC2349DF6B00F67D8A /* Build configuration list for PBXNativeTarget "polynoms" */;
+			buildPhases = (
+				A6D463D22349DF6B00F67D8A /* Sources */,
+				A6D463D32349DF6B00F67D8A /* Frameworks */,
+				A6D463D42349DF6B00F67D8A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = polynoms;
+			productName = polynoms;
+			productReference = A6D463D62349DF6B00F67D8A /* polynoms */;
+			productType = "com.apple.product-type.tool";
+		};
 		A6E9F1DF232B85BE002BD3DB /* den_cpp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A6E9F1E6232B85BE002BD3DB /* Build configuration list for PBXNativeTarget "den_cpp" */;
@@ -1094,6 +1148,9 @@
 					A6AB1214232254C60000B3B5 = {
 						CreatedOnToolsVersion = 10.3;
 					};
+					A6D463D52349DF6B00F67D8A = {
+						CreatedOnToolsVersion = 11.0;
+					};
 					A6E9F1DF232B85BE002BD3DB = {
 						CreatedOnToolsVersion = 10.3;
 					};
@@ -1129,6 +1186,7 @@
 				A66B2A53232AC38900B4AE86 /* maths */,
 				A6E9F1DF232B85BE002BD3DB /* den_cpp */,
 				A67FD3E9233DFA5C00B47F42 /* derive */,
+				A6D463D52349DF6B00F67D8A /* polynoms */,
 			);
 		};
 /* End PBXProject section */
@@ -1268,6 +1326,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6D463D22349DF6B00F67D8A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6D463D92349DF6B00F67D8A /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1693,6 +1759,26 @@
 			};
 			name = Release;
 		};
+		A6D463DA2349DF6B00F67D8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4LT66343UC;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A6D463DB2349DF6B00F67D8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 4LT66343UC;
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		A6E9F1E4232B85BE002BD3DB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1874,6 +1960,15 @@
 			buildConfigurations = (
 				A6AB121A232254C60000B3B5 /* Debug */,
 				A6AB121B232254C60000B3B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A6D463DC2349DF6B00F67D8A /* Build configuration list for PBXNativeTarget "polynoms" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6D463DA2349DF6B00F67D8A /* Debug */,
+				A6D463DB2349DF6B00F67D8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
