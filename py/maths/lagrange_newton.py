@@ -53,19 +53,26 @@ def display_func(x_left, x_right, step):
     plot.plot(x, y, color="#FF0000", label='f(x)')
 
 
-points = [-1.2, -0.7, -0.2, 0.3]
-values = list(map(func, points))
-x = -0.5
-print("(lagrange) x = -0.5; value = {}".format(lagrange(x, points, values, len(points))))
-print("(newton) x = -0.5; value = {}".format(newton(x, points, values, len(points))))
+def main():
+    args = [-1.2, -0.7, -0.2, 0.3]
+    values = list(map(func, args))
+    x = -0.5
+    print("(x^2*e^x) x = -0.5; value = {}".format(func(-0.5)))
+    print("(lagrange) x = -0.5; value = {}".format(lagrange(x, args, values, len(args))))
+    print("(newton) x = -0.5; value = {}".format(newton(x, args, values, len(args))))
 
-x_left = points[0]
-x_right = points[len(points) - 1]
-step = 0.01
+    x_left = args[0]
+    x_right = args[len(args) - 1]
+    step = 0.01
 
-fig = plot.figure()
-plot.grid(True)
-display_func(x_left, x_right, step)
-display_lagrange(points, values, x_left, x_right, step)
-display_newton(points, values, x_left, x_right, step)
-plot.show()
+    fig = plot.figure()
+    plot.grid(True)
+    display_func(x_left, x_right, step)
+    display_lagrange(args, values, x_left, x_right, step)
+    display_newton(args, values, x_left, x_right, step)
+    plot.legend()
+    plot.show()
+
+
+if (__name__ == "__main__"):
+    main()
