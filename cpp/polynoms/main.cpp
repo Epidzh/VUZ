@@ -6,11 +6,11 @@
 //  Copyright © 2019 SergioPetrovx. All rights reserved.
 //
 
-#include <iostream>
 #include <cmath>
 #include <vector>
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
+#include <iostream>
 
 using namespace std;
 
