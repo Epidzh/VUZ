@@ -1,10 +1,10 @@
-from math import exp
+from math import sqrt
 import matplotlib.pyplot as plot
 from numpy import arange
 
 
 def func(x):
-    return x * x * exp(x)
+    return sqrt(x)
 
 
 def lagrange(x, args, values, n):
@@ -20,18 +20,19 @@ def lagrange(x, args, values, n):
 
 def diff(args, values):
     if len(args) > 2:
-        return (diff(args[0:len(args) - 1], values[0:len(args) - 1]) -
-                diff(args[1:len(args)], values[1:len(args)])) / (args[0] - args[-1])
-    return (values[0] - values[1]) / (args[0] - args[1])
+        return (diff(args[:-1], values[:-1]) -
+                diff(args[1:], values[1:])) / (args[0] - args[-1])
+    return (values[0] - values[-1]) / (args[0] - args[-1])
 
 
 def newton(x, args, values, n):
-    ans = func(x)
+    ans = func(args[0]) + (x - args[1]) * diff(args[:2], values[:2])
     for i in range(2, len(args)):
         t = 1.0
-        for j in range(0, len(args)):
+        print(list(range(0, i)))
+        for j in range(0, i):
             t *= (x - args[j])
-        ans += t * diff(args[0:i], values[0:i])
+        ans += t * diff(args[:i], values[:i])
     return ans
 
 
@@ -54,15 +55,15 @@ def display_func(x_left, x_right, step):
 
 
 def main():
-    args = [-1.2, -0.7, -0.2, 0.3]
+    args = [0, 1.7, 3.4, 5.1]
     values = list(map(func, args))
-    x = -0.5
-    print("(x^2*e^x) x = -0.5; value = {}".format(func(-0.5)))
-    print("(lagrange) x = -0.5; value = {}".format(lagrange(x, args, values, len(args))))
-    print("(newton) x = -0.5; value = {}".format(newton(x, args, values, len(args))))
+    x = 3.0
+    print("(sqrt(x)) x = {}; value = {}".format(x, func(x)))
+    print("(lagrange) x = {}; value = {}".format(x, lagrange(x, args, values, len(args))))
+    print("(newton) x = {}; value = {}".format(x, newton(x, args, values, len(args))))
 
     x_left = args[0]
-    x_right = args[len(args) - 1]
+    x_right = args[-1]
     step = 0.01
 
     fig = plot.figure()
