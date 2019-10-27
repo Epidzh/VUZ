@@ -3,22 +3,6 @@
 
 static const double ln_10 = log(10);
 
-//template<class T>
-//T m_exp(T x, int n)
-//{
-//    if (n == 1)
-//        return x;
-//    else if (n % 2 == 0)
-//    {
-//        T temp = m_exp(x, n / 2);
-//        return temp * temp;
-//    }
-//    else
-//    {
-//        return x * m_exp(x, n - 1);
-//    }
-//}
-
 double m_sin(double x, double EPS = 0.00000001)
 {
     double ARG = M_PI;
