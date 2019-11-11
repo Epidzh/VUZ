@@ -7,44 +7,51 @@ def func(x):
     return sqrt(x)
 
 
-def lagrange(x, args, values, n):
+def lagrange(x, f, n):
     ans = 0
     for i in range(0, n):
         P = 1.0
+        E = 1.0
         for j in range(0, n):
             if (j != i):
-                P *= (x - args[j]) / (args[i] - args[j])
-        ans += P * values[i]
+                P *= x - list(f.keys())[j]
+                E *= list(f.keys())[i] - list(f.keys())[j]
+        ans += P * list(f.values())[i] / E
     return ans
 
 
-def diff(args, values):
-    if len(args) > 2:
-        return (diff(args[:-1], values[:-1]) -
-                diff(args[1:], values[1:])) / (args[0] - args[-1])
-    return (values[0] - values[-1]) / (args[0] - args[-1])
+def coeffs(x):
+    n = len(x)
+    y = list(map(func, x))
+    k = [0] * n
+    k[0] = y[0]
+    for j in range(1, n):
+        for i in range(0, n - j):
+            y[i] = (y[i + 1] - y[i]) / (x[i + j] - x[i])
+            k[j] = y[0]
+    return k
 
 
-def newton(x, args, values, n):
-    ans = func(args[0]) + (x - args[1]) * diff(args[:2], values[:2])
-    for i in range(2, len(args)):
-        t = 1.0
-        print(list(range(0, i)))
-        for j in range(0, i):
-            t *= (x - args[j])
-        ans += t * diff(args[:i], values[:i])
+def Newtone(point, x):
+    n = len(x)
+    k = coeffs(x)
+    ans = k[0]
+    p = 1
+    for i in range(1, n):
+        p = p * (point - x[i - 1])
+        ans += k[i] * p
     return ans
 
 
-def display_lagrange(points, values, x_left, x_right, step):
+def display_lagrange(f, x_left, x_right, step):
     x = arange(x_left, x_right, step)
-    y = [lagrange(i, points, values, len(points)) for i in x]
+    y = [lagrange(i, f, len(f)) for i in x]
     plot.plot(x, y, color="#0000FF", label='lagrange')
 
 
-def display_newton(points, values, x_left, x_right, step):
+def display_newton(f, x_left, x_right, step):
     x = arange(x_left, x_right, step)
-    y = [newton(i, points, values, len(points)) for i in x]
+    y = [Newtone(i, x) for i in x]
     plot.plot(x, y, color="#00BB00", label='newton')
 
 
@@ -56,21 +63,20 @@ def display_func(x_left, x_right, step):
 
 def main():
     args = [0, 1.7, 3.4, 5.1]
-    values = list(map(func, args))
-    x = 3.0
-    print("(sqrt(x)) x = {}; value = {}".format(x, func(x)))
-    print("(lagrange) x = {}; value = {}".format(x, lagrange(x, args, values, len(args))))
-    print("(newton) x = {}; value = {}".format(x, newton(x, args, values, len(args))))
-
     x_left = args[0]
     x_right = args[-1]
-    step = 0.01
+    step = 0.1
+    f = dict(zip(args, list(map(func, args))))
+    x = 3.0
+    print("(sqrt(x)) x = {}; value = {}".format(x, func(x)))
+    print("(lagrange) x = {}; value = {}".format(x, lagrange(x, f, len(f))))
+    print("(newton) x = {}; value = {}".format(x, Newtone(x, args)))
 
     fig = plot.figure()
     plot.grid(True)
     display_func(x_left, x_right, step)
-    display_lagrange(args, values, x_left, x_right, step)
-    display_newton(args, values, x_left, x_right, step)
+    display_lagrange(f, x_left, x_right, step)
+    display_newton(f, x_left, x_right, step)
     plot.legend()
     plot.show()
 
