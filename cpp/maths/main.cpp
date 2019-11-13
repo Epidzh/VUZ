@@ -5,7 +5,8 @@ using namespace std;
 static const double ln_10 = log(10);
 int num = 0;
 
-double m_sin(double x, double EPS = 0.00000001) {
+double m_sin(double x, double EPS = 0.00000001)
+{
     double ARG = M_PI;
     if (x > ARG)
         x = (x > 0) ? x - int((x / ARG)) * ARG : x + int((x / ARG)) * ARG;
