@@ -29,6 +29,5 @@ int main(int argc, const char * argv[]) {
     if (ans == correct_ans)
         cout << " Correct" << endl;
     else
-        cout << " Incorrect" << endl;
     return 0;
 }
