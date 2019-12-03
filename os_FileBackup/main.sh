@@ -1,0 +1,3 @@
+#!/bin/zsh
+CURRENT_DIR=$0
+BACKUP_DIR=$1
