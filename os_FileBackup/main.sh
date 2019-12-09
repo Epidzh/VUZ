@@ -1,15 +1,13 @@
 #!/bin/zsh
 BACKUP_DIR="$(pwd)"
-BACKUP_FOLDER_NAME="MY_BACKUP$(date "+%d.%m.%y%H:%M:%S")"
+BACKUP_FOLDER_NAME="MY_BACKUP$(date "+%d.%m.%y_%H:%M:%S")"
 prev_backup_dir_list=()
 COMPARE_MODE=1
 
 # ARGUMENT PARSING
 backup_list=()
-i=1
 while [ -n "$1" ]
 do
-    
     if [ "$1" = "-d" ]
     then
         shift
@@ -22,19 +20,26 @@ do
             exit
         fi
     else
-        backup_list+=( "$(pwd)/$1" )
+        if [[ -d "$1" || -f "$1" || -d "$(pwd)/$1" || -f "$(pwd)/$1" ]]
+        then
+            backup_list+=("$(realpath $1)")
+        else
+            echo "$1 doesn't exist!"
+            exit
+        fi
     fi
-    echo "$1"
-    echo "$backup_list"
     shift
 done
 
 if [ "${#backup_list[@]}" -eq "0" ]
 then
-    read -p 'No arguments! Backup all objects? [y/n]: ' choice
+    read '?No arguments! Backup all objects? [y/n]: ' choice
     if [ "$choice" = "y" ]
     then
-        backup_list=( "$(find "$BACKUP_DIR" -d 1)" )
+        #backup_list=("${(@f)$(find "$BACKUP_DIR" -d 1)}")
+        find "$BACKUP_DIR" -d 1 | while read line; do
+            backup_list+=( "$line" )
+        done
     else
         exit
     fi
@@ -56,7 +61,7 @@ do
     echo "$i $(stat -f %m $i)" >> "$BACKUP_DIR/$BACKUP_FOLDER_NAME/BACKUP_INFO"
 done
 
-# COMPARE PHASE
+# COMPARE PHASE (if file in old backup is not find -> ask to delete this file; if all files in old backup updates in new backup -> ask to delete them)
 # if [ $COMPARE_MODE -eq 1 ]
 # then
     
