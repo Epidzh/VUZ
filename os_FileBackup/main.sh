@@ -48,7 +48,11 @@ fi
 # INIT BACKUP FOLDER AND COMPARE MODE
 if [ ! -d "$BACKUP_DIR/$BACKUP_FOLDER_NAME" ]; then mkdir "$BACKUP_DIR/$BACKUP_FOLDER_NAME"; fi
 touch "$BACKUP_DIR/$BACKUP_FOLDER_NAME/BACKUP_INFO"
-prev_backup_dir_list=( "$(find "$BACKUP_DIR" -d 1)" )
+prev_backup_dir_list=()
+find "$BACKUP_DIR" -d 1 -name "MY_BACKUP??.??.??_??:??:??" -type d | while read line
+do
+    prev_backup_dir_list+=( "$line" )
+done
 if [ "${#prev_backup_dir_list[@]}" -eq "1" ]
 then
     COMPARE_MODE=0
@@ -62,7 +66,10 @@ do
 done
 
 # COMPARE PHASE (if file in old backup is not find -> ask to delete this file; if all files in old backup updates in new backup -> ask to delete them)
-# if [ $COMPARE_MODE -eq 1 ]
-# then
-    
-# fi
+if [ $COMPARE_MODE -eq 1 ]
+then
+    for i in $prev_backup_dir_list
+    do
+        
+    done
+fi
