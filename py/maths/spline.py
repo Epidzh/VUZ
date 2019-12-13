@@ -1,13 +1,7 @@
-# args = [1.0, 1.9, 2.8, 3.7, 4.6]
-# value = [2.4142, 1.0818, 0.50953, 0.11836, -0.24008]
-# x = 2.66666
-# N = 5
-# h = (args[-1] - args[0]) / N
-# print(h)
 
 import matplotlib.pyplot as plt
- 
-# Структура, описывающая сплайн на каждом сегменте сетки
+from numpy import arange
+
 class SplineTuple:
     def __init__(self, a, b, c, d, x):
         self.a = a
@@ -15,62 +9,49 @@ class SplineTuple:
         self.c = c
         self.d = d
         self.x = x
- 
-# Построение сплайна
-# x - узлы сетки, должны быть упорядочены по возрастанию, кратные узлы запрещены
-# y - значения функции в узлах сетки
-# n - количество узлов сетки
+
+
 def BuildSpline(x, y, n):
-    # Инициализация массива сплайнов
     splines = [SplineTuple(0, 0, 0, 0, 0) for _ in range(0, n)]
-    for i in range(0, n):
+    for i in range(1, n):
         splines[i].x = x[i]
         splines[i].a = y[i]
-    
-    splines[0].c = splines[n - 1].c = 0.0
-    
-    # Решение СЛАУ относительно коэффициентов сплайнов c[i] методом прогонки для трехдиагональных матриц
-    # Вычисление прогоночных коэффициентов - прямой ход метода прогонки
+
     alpha = [0.0 for _ in range(0, n - 1)]
     beta  = [0.0 for _ in range(0, n - 1)]
- 
+
     for i in range(1, n - 1):
-        hi  = x[i] - x[i - 1]
-        hi1 = x[i + 1] - x[i]
-        A = hi
-        C = 2.0 * (hi + hi1)
-        B = hi1
-        F = 6.0 * ((y[i + 1] - y[i]) / hi1 - (y[i] - y[i - 1]) / hi)
-        z = (A * alpha[i - 1] + C)
-        alpha[i] = -B / z
-        beta[i] = (F - A * beta[i - 1]) / z
-  
- 
-    # Нахождение решения - обратный ход метода прогонки
+        hi = x[i] - x[i - 1]
+        hi_plus_1 = x[i + 1] - x[i]
+        li = y[i] - y[i - 1]
+        li_plus_1 = y[i + 1] - y[i]
+        if i == 1:
+            alpha[i] = -hi_plus_1 / (2 * (hi + hi_plus_1))
+            beta[i] = 3 * (li_plus_1 - li) / (2 * (hi + hi_plus_1))
+        else:
+            alpha[i] = -hi_plus_1 / (2 * hi + 2 * hi_plus_1 + hi * alpha[i - 1])
+            beta[i] = (3 * li_plus_1 - 3 * li - hi * beta[i - 1]) / (2 * hi + 2 * hi_plus_1 + hi * alpha[i - 1])
+
     for i in range(n - 2, 0, -1):
         splines[i].c = alpha[i] * splines[i + 1].c + beta[i]
-    
-    # По известным коэффициентам c[i] находим значения b[i] и d[i]
+
     for i in range(n - 1, 0, -1):
         hi = x[i] - x[i - 1]
+        li = y[i] - y[i - 1]
+        splines[i].b = hi * (2.0 * splines[i].c + splines[i - 1].c) / 6.0 + li / hi
         splines[i].d = (splines[i].c - splines[i - 1].c) / hi
-        splines[i].b = hi * (2.0 * splines[i].c + splines[i - 1].c) / 6.0 + (y[i] - y[i - 1]) / hi
     return splines
- 
- 
-# Вычисление значения интерполированной функции в произвольной точке
-def Interpolate(splines, x):
-    if not splines:
-        return None # Если сплайны ещё не построены - возвращаем NaN
-    
+
+
+def Interpolate(splines, x, t=0):
+
     n = len(splines)
     s = SplineTuple(0, 0, 0, 0, 0)
-    
-    if x <= splines[0].x: # Если x меньше точки сетки x[0] - пользуемся первым эл-тов массива
+    if x <= splines[0].x:
         s = splines[0]
-    elif x >= splines[n - 1].x: # Если x больше точки сетки x[n - 1] - пользуемся последним эл-том массива
+    elif x >= splines[n - 1].x:
         s = splines[n - 1]
-    else: # Иначе x лежит между граничными точками сетки - производим бинарный поиск нужного эл-та массива
+    else:
         i = 0
         j = n - 1
         while i + 1 < j:
@@ -80,19 +61,30 @@ def Interpolate(splines, x):
             else:
                 i = k
         s = splines[j]
-    
     dx = x - s.x
-    # Вычисляем значение сплайна в заданной точке по схеме Горнера (в принципе, "умный" компилятор применил бы схему Горнера сам, но ведь не все так умны, как кажутся)
-    return s.a + (s.b + (s.c / 2.0 + s.d * dx / 6.0) * dx) * dx;
-    
- 
-x = [1.0, 1.9, 2.8, 3.7, 4.6, 5.5]
-y = [2.4142, 1.0818, 0.50953, 0.11836, -0.24008, -0.66818]
-new_x = 5
- 
+    if t != 0:
+        print("a={} ; b={} ; c={} ; d={}".format(s.a, s.b, s.c, s.d))
+    return s.a + (s.b + (s.c / 2.0 + s.d * dx / 6.0) * dx) * dx
+
+
+x = [1.0, 1.9, 2.8, 3.7, 4.6]
+y = [2.4142, 1.0818, 0.50953, 0.11836, -0.24008]
+x0 = 2.66666
 spline = BuildSpline(x, y, len(x))
- 
+xx = [i for i in arange(x[0], x[-1], 0.01)]
+yy = [Interpolate(spline, i) for i in xx]
+plt.grid(True)
 plt.scatter(x, y)
-plt.plot(x, y)
-plt.scatter(new_x, Interpolate(spline, new_x))
+plt.plot(xx, yy)
+y0 = Interpolate(spline, x0)
+plt.scatter(x0, y0)
+print("x={} -> y={}".format(x0, y0))
+print()
+for j in range(1, len(spline)):
+    i = spline[j]
+    print("a={} ; b={} ; c={} ; d={}; x={}".format(i.a, i.b, i.c, i.d, i.x))
+y1 = Interpolate(spline, 1.5)
+print()
+print("В точке x={} -> y={}".format(1.5, y1))
+y1 = Interpolate(spline, 1.5, 1)
 plt.show()

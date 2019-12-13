@@ -38,8 +38,8 @@ def BuildSpline(x, y, n):
     for i in range(n - 1, 0, -1):
         hi = x[i] - x[i - 1]
         li = y[i] - y[i - 1]
-        splines[i].b = hi * (2.0 * splines[i].c + splines[i - 1].c) / 6.0 + li / hi
-        splines[i].d = (splines[i].c - splines[i - 1].c) / hi
+        splines[i].b = hi * (2.0 * splines[i].c + splines[i - 1].c) / 3.0 + (splines[i].a - splines[i-1].a) / hi
+        splines[i].d = (splines[i].c - splines[i - 1].c) / 3*hi
     return splines
 
 

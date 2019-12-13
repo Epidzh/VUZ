@@ -1,4 +1,5 @@
 #!/bin/zsh
+IFS=$'\n'
 BACKUP_DIR="$(pwd)"
 BACKUP_FOLDER_NAME="MY_BACKUP$(date "+%d.%m.%y_%H:%M:%S")"
 prev_backup_dir_list=()
