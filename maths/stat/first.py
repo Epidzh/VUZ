@@ -1,6 +1,7 @@
 from math import sqrt
 from matplotlib import pyplot
 
+
 def get_random_binomial(n, p, size=1):
     '''Генерация size псевдослучайных чисел, распределенных по
     биномиальному закону с параметрами n и p
@@ -77,12 +78,12 @@ def get_med(R):
     '''Получение выборочной медианы из коллекции R
     '''
     ans = 0
-    for i in range(1, len(R) - 1):
+    for i in range(len(R) - 1):
         if get_func(R, R[i][0]) > 0.5:
             ans = R[i][0]
             break
         elif get_func(R, R[i][0]) == 0.5:
-            ans = 0.5*(R[i][0] + R[i][0] + 1)
+            ans = 0.5*(R[i][0] + R[i+1][0] + 1)
             break
     return ans
 
@@ -90,7 +91,11 @@ def get_med(R):
 def get_moda(R):
     '''Получение выборочной моды из коллекции R
     '''
-    return max([(j, i) for i, j, _ in R])[1]
+    moda = max([(j, i) for i, j, _ in R])[1]
+    count = [i for i, _, _ in R].count(moda)
+    if count > 1:
+        moda *= 0.5 * count
+    return moda
 
 
 def get_moment(R, k):
@@ -164,15 +169,15 @@ def draw_arrows(plt, R):
             plt.arrow(x1, y1, x2-x1, 0, head_width=0.01, head_length=0.2, length_includes_head=True)
 
 
-def draw(R1, R2, R3):
+def draw(R, teoretic_data):
     '''Отрисовка графиков
     '''
     
     pyplot.figure()
     pyplot.grid(True)
-    pyplot.plot([i for i, _, _ in R1], [k for _, _, k in R1], color='blue')
-    pyplot.plot([i for i, _, _ in R1], [get_teoretic_binom(n, i, p) for i, _, _ in R1], color='red')
-    draw_arrows(pyplot, R1)
+    pyplot.plot([i for i, _, _ in R], [k for _, _, k in R], color='blue')
+    pyplot.plot([i for i, _, _ in R], teoretic_data, color='red')
+    draw_arrows(pyplot, R)
 
     pyplot.figure()
     pyplot.grid(True)
@@ -183,7 +188,7 @@ def draw(R1, R2, R3):
     pyplot.figure()
     pyplot.grid(True)
     pyplot.plot([i for i, _, _ in R3], [k for _, _, k in R3], color='blue')
-    pyplot.plot([i for i, _, _ in R3], [get_teoretic_poisson(n*p, i) for i, _, _ in R3], color='red')
+    pyplot.plot([i for i, _, _ in R3], [get_teoretic_poisson(l, i) for i, _, _ in R3], color='red')
     draw_arrows(pyplot, R3)
     
     pyplot.show()
@@ -199,13 +204,13 @@ print("Binom")
 #binom = get_random_binomial(n, p, N)
 binom = [7, 7, 6, 7, 5, 7, 6, 7, 9, 9, 5, 7, 5, 5, 7, 5, 7, 8, 4, 
         7, 0, 3, 7, 5, 6, 9, 7, 7, 7, 2, 8, 4, 4, 5, 4, 8, 6, 7,
-        6, 7, 6, 8, 8, 8, 7, 5, 6, 4, 6, 4, 8, 5, 4,9, 5, 8, 9,
+        6, 7, 6, 8, 8, 8, 7, 5, 6, 4, 6, 4, 8, 5, 4, 9, 5, 8, 9,
         4, 5, 7, 6, 7, 7, 6, 5, 7, 6, 6, 6, 6, 5, 6, 7, 7, 8, 6,
         8, 6, 6, 6, 7, 7, 4, 7, 7, 5, 3, 5, 7, 8, 6, 10, 5, 8, 7,
         7, 8, 9, 10, 8, 4, 8, 4, 7, 7, 5, 8, 10, 6, 5, 9, 6, 5, 6,
         7, 6, 7, 10, 7, 4, 6, 9, 7, 5, 7, 8, 7, 8, 4, 8, 6, 8, 7,
         8, 8, 7, 8, 9, 8, 5, 6, 7, 8, 5, 8, 7, 7, 6, 9, 8, 6, 11,
-        5, 8, 5, 6, 8, 4,7, 5, 8, 9, 6, 9, 5, 7, 5, 4, 5, 8, 7,
+        5, 8, 5, 6, 8, 4, 7, 5, 8, 9, 6, 9, 5, 7, 5, 4, 5, 8, 7,
         8, 8, 8, 7, 6, 8, 1, 7, 7, 5, 7, 7, 8, 7, 6, 8, 4, 11,
         8, 7, 5, 7, 3, 9, 6, 6, 7, 4, 6]
 print(sorted(binom))
@@ -232,19 +237,24 @@ print(R2)
 get_info(R2, N)
 
 print("Poisson")
-#poisson = get_random_poisson(n*p, N)
-poisson = [4, 11, 11, 5, 11, 3, 8, 6, 5, 8, 6, 5, 5, 10, 4, 5, 5,
-        1, 3, 4, 5, 4, 5, 4, 2,11, 11, 6, 6, 4, 6, 6, 3, 10, 7, 7,
-        5, 2, 7, 3, 8, 11, 4, 9, 6, 6, 4, 9, 4, 6, 7, 5, 5, 5, 5, 6,
-        3, 9, 2, 10, 1, 5, 4, 1, 6, 14, 8, 6, 6, 6, 4, 4, 4, 2, 7, 6,
-        5, 2, 8, 1, 8, 6, 6, 6, 5, 5, 5, 4, 5, 7, 5, 3, 2, 7, 8, 5, 3,
-        5, 5, 6, 6, 4, 8,7, 6, 5, 3, 4, 10, 7, 4, 3, 3, 3, 6, 6, 6, 9,
-        5, 8, 3, 5, 2, 7, 12, 7, 7, 8, 6,2, 8, 5, 7, 5, 10, 4, 3, 0, 5,
-        8, 2, 3, 5, 6, 5, 7, 5, 7, 10, 3, 7, 10, 8, 8, 7, 7, 2, 8, 4, 5,
-        7, 4, 7, 6, 7, 11, 1, 3, 4, 7, 5, 7, 7, 7, 2, 7, 7, 10, 5, 9, 5,
-        6, 7, 7, 7, 2, 13, 6, 5, 5, 5, 8, 5, 0, 10, 2, 5, 6, 3, 13]
+l = 0.5+0.01*v
+print("l = ", l)
+#poisson = get_random_poisson(l, N)
+poisson = [1, 1, 0, 0, 0, 2, 1, 2, 0, 1, 1, 1, 0, 0, 2, 0, 3, 0,
+        0, 1, 2, 1, 1, 1, 1, 3, 0, 1, 3, 0, 1, 3, 1, 1, 2, 0, 0,
+        1, 0, 1, 1, 0, 0, 0, 0, 0, 3, 0, 1, 0, 0, 1, 1, 0, 1, 1,
+        1, 1, 1, 0, 3, 2, 2, 2, 1, 1, 2, 0, 0, 0, 5, 1, 1, 0, 1,
+        1, 0, 0, 1, 1, 1, 0, 1, 2, 2, 1, 0, 0, 0, 2, 1, 1, 0, 1,
+        1, 0, 0, 1, 0, 1, 0, 1, 2, 0, 4, 1, 1, 0, 1, 2, 0, 0, 0,
+        1, 0, 2, 0, 3, 1, 2, 2, 1, 1, 2, 3, 0, 2, 1, 2, 1, 0, 1,
+        2, 1, 0, 2, 1, 2, 1, 2, 2, 1, 0, 2, 0, 0, 0, 0, 1, 1, 1,
+        2, 2, 3, 3, 1, 1, 1, 1, 0, 0, 0, 1, 2, 1, 0, 1, 5, 0, 1,
+        2, 1, 0, 2, 0, 2, 1, 2, 1, 1, 0, 0, 0, 2, 0, 1, 3, 0, 1,
+        1, 0, 1, 0, 1, 0, 0, 2, 1, 3, 6]
 print(sorted(poisson))
 R3 = get_xi_ni_wi(poisson, N)
 print(R3)
 get_info(R3, N)
-draw(R1, R2, R3)
+draw(R1, [get_teoretic_binom(n, i, p) for i, _, _ in R1])
+draw(R2, [get_teoretic_geometric(i, p) for i, _, _ in R2])
+draw(R3, [get_teoretic_poisson(l, i) for i, _, _ in R3])
