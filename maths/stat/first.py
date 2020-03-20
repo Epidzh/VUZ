@@ -1,52 +1,47 @@
 from math import sqrt
 from matplotlib import pyplot
+from numpy.random import binomial, geometric, poisson
 
 
+"""Генерация size псевдослучайных чисел, распределенных по
+биномиальному закону с параметрами n и p
+"""
 def get_random_binomial(n, p, size=1):
-    '''Генерация size псевдослучайных чисел, распределенных по
-    биномиальному закону с параметрами n и p
-    '''
-    from numpy.random import binomial
     return binomial(n, p, size)
 
 
+"""Генерация size псевдослучайных чисел, распределенных по
+геометрическому закону с параметром p
+"""
 def get_random_geometric(p, size=1):
-    '''Генерация size псевдослучайных чисел, распределенных по
-    геометрическому закону с параметром p
-    '''
-    from numpy.random import geometric
     return [i-1 for i in geometric(p, size)]
 
 
+"""Генерация псевдослучайных чисел, распределенных по
+закону Пуассона с параметром l
+"""
 def get_random_poisson(l, size=1):
-    '''Генерация size псевдослучайных чисел, распределенных по
-    закону Пуассона с параметром l
-    '''
-    from numpy.random import poisson
     return poisson(l, size)
 
 
+"""Получение выборочного среднего из коллекции R"""
 def get_sr(R):
-    '''Получение выборочного среднего из коллекции R
-    '''
     ans = 0
     for xi, ni, wi in R:
         ans += xi * wi
     return ans
 
 
+"""Получение выборочной дисперсии из коллекции R с выборочным средним sr"""
 def get_disp(R, sr):
-    '''Получение выборочной дисперсии из коллекции R с выборочным средним sr
-    '''
     ans = 0
     for xi, ni, wi in R:
         ans += (xi - sr)*(xi - sr)*wi
     return ans
 
 
+"""Получение генерация коллекции R - статистического ряда"""
 def get_xi_ni_wi(xi, N):
-    '''Получение генерация коллекции R - статистического ряда
-    '''
     xi.sort()
     mx = xi[-1]
     ni = [0 for i in range(mx + 1)]
@@ -58,9 +53,8 @@ def get_xi_ni_wi(xi, N):
     return list(zip(*[(list(range(mx + 1))), (ni), (wi)]))
 
 
+"""Получение значения эмпирической функции распределения в точке x"""
 def get_func(R, x):
-    '''Получение значения эмпирической функции распределения в точке x
-    '''
     if (x < R[0][0]):
         return 0
     elif x >= R[-1][0]:
@@ -74,9 +68,8 @@ def get_func(R, x):
         return ans
 
 
+"""Получение выборочной медианы из коллекции R"""
 def get_med(R):
-    '''Получение выборочной медианы из коллекции R
-    '''
     ans = 0
     for i in range(len(R) - 1):
         if get_func(R, R[i][0]) > 0.5:
@@ -88,9 +81,8 @@ def get_med(R):
     return ans
 
 
+"""Получение выборочной моды из коллекции R"""
 def get_moda(R):
-    '''Получение выборочной моды из коллекции R
-    '''
     moda = max([(j, i) for i, j, _ in R])[1]
     count = [i for i, _, _ in R].count(moda)
     if count > 1:
@@ -98,51 +90,46 @@ def get_moda(R):
     return moda
 
 
+"""Получение выборочного момента порядка k из коллекции R"""
 def get_moment(R, k):
-    '''Получение выборочного момента порядка k из коллекции R
-    '''
     ans = 0
     for xi, ni, wi in R:
         ans += (xi**k)*wi
     return ans
 
 
+"""Получение выборочного коэффициента асимметрии из коллекции R"""
 def get_k_asim(R, disp):
-    '''Получение выборочного коэффициента асимметрии из коллекции R
-    '''
     ans = get_moment(R, 3) - 3*get_moment(R, 2)*get_moment(R, 1)
     return (ans + 2*(get_moment(R, 1)**3)) / (disp**3)
 
 
+"""Получение выборочного коэффициента эксцесса из коллекции R"""
 def get_k_eks(R, disp):
-    '''Получение выборочного коэффициента эксцесса из коллекции R
-    '''
     ans = get_moment(R, 4) - 4*get_moment(R, 3)*get_moment(R, 1)
     ans += 6* get_moment(R, 2)*(get_moment(R, 1)**2)
     ans -= 3*(get_moment(R, 1)**4)
     return (ans / (disp**4)) - 3
 
 
+"""Получение теоретического значения биномиального распределения"""
 def get_teoretic_binom(n, k, p):
-    '''Получение теоретического значения биномиального распределения
-    '''
     from math import factorial
     return (factorial(n) * (p**k) * (1 - p)**(n-k)) / (factorial(k)* factorial(n - k))
 
 
+"""Получение теоретического значения геометрического распределения"""
 def get_teoretic_geometric(k, p):
-    '''Получение теоретического значения геометрического распределения
-    '''
     return (1 - p)**k * p
 
 
+"""Получение теоретического значения распределения Пуассона"""
 def get_teoretic_poisson(l, k):
-    '''Получение теоретического значения распределения Пуассона
-    '''
     from math import exp, factorial
     return (l**k * exp(-l)) / factorial(k)
 
 
+"""Получение информации о выборке"""
 def get_info(R, N):
     sr = get_sr(R)
     disp = get_disp(R, sr)
@@ -155,24 +142,21 @@ def get_info(R, N):
     print("Выборочный коэффициент эксцесса: ", get_k_eks(R, sqrt(disp)))
 
 
+"""Отрисовка стрелок"""
 def draw_arrows(plt, R):
-        '''Отрисовка стрелок
-        '''
-        plt.figure()
-        plt.grid(True)
-        plt.axis([0, max([i for i, _, _ in R]), 0, 1.0])
-        for i in range(len(R)-1):
-            x1 = R[i][0]+0.0001
-            x2 = R[i+1][0] - 0.0001
-            y1 = get_func(R, x1)
-            y2 = get_func(R, x2)
-            plt.arrow(x1, y1, x2-x1, 0, head_width=0.01, head_length=0.2, length_includes_head=True)
+    plt.figure()
+    plt.grid(True)
+    plt.axis([0, max([i for i, _, _ in R]), 0, 1.0])
+    for i in range(len(R)-1):
+        x1 = R[i][0]+0.0001
+        x2 = R[i+1][0] - 0.0001
+        y1 = get_func(R, x1)
+        y2 = get_func(R, x2)
+        plt.arrow(x1, y1, x2-x1, 0, head_width=0.01, head_length=0.2, length_includes_head=True)
 
 
+"""Отрисовка графика"""
 def draw(R, teoretic_data):
-    '''Отрисовка графиков
-    '''
-    
     pyplot.figure()
     pyplot.grid(True)
     pyplot.plot([i for i, _, _ in R], [k for _, _, k in R], color='blue')
@@ -190,7 +174,7 @@ def draw(R, teoretic_data):
     pyplot.plot([i for i, _, _ in R3], [k for _, _, k in R3], color='blue')
     pyplot.plot([i for i, _, _ in R3], [get_teoretic_poisson(l, i) for i, _, _ in R3], color='red')
     draw_arrows(pyplot, R3)
-    
+
     pyplot.show()
 
 
@@ -202,7 +186,7 @@ print("n={} ; p={}".format(n , p))
 
 print("Binom")
 #binom = get_random_binomial(n, p, N)
-binom = [7, 7, 6, 7, 5, 7, 6, 7, 9, 9, 5, 7, 5, 5, 7, 5, 7, 8, 4, 
+binom = [7, 7, 6, 7, 5, 7, 6, 7, 9, 9, 5, 7, 5, 5, 7, 5, 7, 8, 4,
         7, 0, 3, 7, 5, 6, 9, 7, 7, 7, 2, 8, 4, 4, 5, 4, 8, 6, 7,
         6, 7, 6, 8, 8, 8, 7, 5, 6, 4, 6, 4, 8, 5, 4, 9, 5, 8, 9,
         4, 5, 7, 6, 7, 7, 6, 5, 7, 6, 6, 6, 6, 5, 6, 7, 7, 8, 6,
@@ -220,16 +204,16 @@ get_info(R1, N)
 
 print("Geom")
 #geom = get_random_geometric(p, N)
-geom = [0, 0, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 3, 3, 0, 2, 0, 0, 1, 
-        0, 0, 1, 0, 0, 1, 0, 1, 0, 2, 0, 0, 0, 0, 1, 0, 2, 1, 0, 
-        4, 1, 0, 0, 1, 3, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 2, 
-        0, 3, 2, 0, 1, 6, 4, 4, 1, 0, 0, 0, 3, 1, 1, 1, 2, 0, 0, 
-        1, 2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4, 0, 0, 3, 1, 1, 1, 
-        1, 0, 2, 1, 0, 4, 0, 2, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 
-        2, 0, 1, 4, 4, 2, 0, 3, 1, 0, 0, 1, 1, 0, 2, 0, 0, 0, 0, 
-        0, 0, 0, 5, 1, 0, 4, 2, 1, 1, 1, 0, 2, 2, 2, 0, 1, 0, 0, 
-        0, 0, 2, 1, 0, 0, 2, 3, 1, 0, 1, 2, 1, 0, 0, 0, 1, 0, 1, 
-        1, 0, 0, 0, 1, 2, 1, 1, 1, 0, 0, 0, 3, 0, 3, 0, 0, 0, 1, 
+geom = [0, 0, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 3, 3, 0, 2, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 1, 0, 2, 0, 0, 0, 0, 1, 0, 2, 1, 0,
+        4, 1, 0, 0, 1, 3, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 2,
+        0, 3, 2, 0, 1, 6, 4, 4, 1, 0, 0, 0, 3, 1, 1, 1, 2, 0, 0,
+        1, 2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4, 0, 0, 3, 1, 1, 1,
+        1, 0, 2, 1, 0, 4, 0, 2, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+        2, 0, 1, 4, 4, 2, 0, 3, 1, 0, 0, 1, 1, 0, 2, 0, 0, 0, 0,
+        0, 0, 0, 5, 1, 0, 4, 2, 1, 1, 1, 0, 2, 2, 2, 0, 1, 0, 0,
+        0, 0, 2, 1, 0, 0, 2, 3, 1, 0, 1, 2, 1, 0, 0, 0, 1, 0, 1,
+        1, 0, 0, 0, 1, 2, 1, 1, 1, 0, 0, 0, 3, 0, 3, 0, 0, 0, 1,
         0, 0, 2, 1, 1, 0, 2, 2, 1, 1]
 print(geom)
 R2 = get_xi_ni_wi(geom, N)

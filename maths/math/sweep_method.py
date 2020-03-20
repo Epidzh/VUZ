@@ -54,4 +54,3 @@ for i in range(len(slau)):
         print(x[i-1] * slau[i][0] + x[i] * slau[i][1])
     else:
         print(x[i-1] * slau[i][0] + x[i] * slau[i][1] + x[i+1] * slau[i][2])
-
