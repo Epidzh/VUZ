@@ -36,8 +36,9 @@ args = [0, 1.0, 2.0, 3.0, 4.0]
 x = 2.0
 h = 1.0
 print("x={}\nh={}".format(x, h))
-print("first left derive: {}".format(first_left(f(x), f(x - h), h)))
-print("first right derive: {}".format(first_right(f(x + h), f(x), h)))
-print("first center derive: {}".format(first_center(f(x + h), f(x - h), h)))
-print("second derive: {}".format(second(f(x + h), f(x), f(x - h), h)))
-print("second right: {}".format(second_right(f(x + h + h), f(x + h), f(x), h)))
+print("Первая левая производная: {}".format(first_left(f(x), f(x - h), h)))
+print("Первая правая производная: {}".format(first_right(f(x + h), f(x), h)))
+print("Первая центральная производная: {}".format(first_center(f(x + h), f(x - h), h)))
+# print("second derive: {}".format(second(f(x + h), f(x), f(x - h), h)))
+# print("second right: {}".format(second_right(f(x + h + h), f(x + h), f(x), h)))
+print("Вторая производная: {}".format(second(f(x + h), f(x), f(x - h), h)))

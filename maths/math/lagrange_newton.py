@@ -67,9 +67,9 @@ def main():
     
     x_range = arange(x_left, x_right, step)
     x = 3.0
-    print("(sqrt(x)) x = {}; value = {}".format(x, func(x)))
-    print("(lagrange) x = {}; value = {}".format(x, lagrange(x, args, values, len(args))))
-    print("(newton) x = {}; value = {}".format(x, newton(x, args)))
+    print("Функция в точке x = {}; значение = {}".format(x, func(x)))
+    print("Лагранж в точке x = {}; значение = {}".format(x, lagrange(x, args, values, len(args))))
+    print("Ньютон в точке x = {}; значение = {}".format(x, newton(x, args)))
 
     # for i in x_range:
     #     print("x={}: f - {}, lagrange - {}, newton = {} ".format(i, func(i), lagrange(i, args, values, len(args)), newton(i, args)))
@@ -90,8 +90,8 @@ def main():
             mx_value_diff = abs(a - b)
             mx_value_diff_point = i
 
-    print("MAX VALUE DIFFERENCE = {} at x = {}".format(mx_value_diff, mx_value_diff_point))
-    print("x={}: f - {}, lagrange - {}, newton = {} ".format(mx_value_diff_point, func(mx_value_diff_point), lagrange(mx_value_diff_point, args, values, len(args)), newton(mx_value_diff_point, args)))
+    # print("MAX VALUE DIFFERENCE = {} at x = {}".format(mx_value_diff, mx_value_diff_point))
+    # print("В точке x={}: f - {}, lagrange ={}, newton = {} ".format(mx_value_diff_point, func(mx_value_diff_point), lagrange(mx_value_diff_point, args, values, len(args)), newton(mx_value_diff_point, args)))
 
     # y = [func(i) for i in x]
     # print(y)

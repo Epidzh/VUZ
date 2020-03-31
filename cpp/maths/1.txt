@@ -1,0 +1,3 @@
+8 AAQ 45.0017 37.3483 	Anapa
+9 AAR 56.3000 10.6190 	Aarhus Tirstrup Airport
+10 AAT 47.7200 88.1500 	Altay

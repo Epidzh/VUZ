@@ -2,33 +2,27 @@ from matplotlib import pyplot
 from math import sqrt, exp, log2, pi, fabs
 from numpy.random import exponential, normal, uniform
 from numpy import arange
+from scipy.stats import norm, uniform, expon
 import docx
 
 
+"""Получение выборки по нормальному распределению"""
 def get_random_normal(alpha, sigma, N):
     return list(normal(alpha, sigma, 200))
 
 
-def get_normal(alpha, sigma, x):
-    return (1 / (sqrt(2 * pi) * sigma)) * exp(-(x - alpha)**2/(2 * sigma**2))
 
-
+"""Получение выборки по показательному распределению"""
 def get_random_exponental(l, N):
     return list(exponential(l, N))
 
 
-def get_exponental(l, x):
-    return l * exp(-x / l)
-
-
+"""Получение выборки по равномерному распределению"""
 def get_random_uniform(a, b, N):
     return list(uniform(a, b, N))
 
 
-def get_uniform(a, b, x):
-    return 1 / (b - a) if a <= x <= b else 0
-
-
+"""Получение рядов"""
 def get_raws(R, a0, am, N):
     m = 1 + round(log2(N))
     d = (am - a0) / m
@@ -154,43 +148,46 @@ def draw(R, group, h):
 
 
 def save_to_docx(R, group, assoc, file_name):
-    doc = docx.Document()
-    table1 = doc.add_table(rows=20, cols=10)
-    table1.style = 'TableGrid'
-    j = 0
-    for i in range(len(R)):
-        table1.rows[j].cells[i % 10].text = str(R[i])
-        j = j + 1 if i % 10 == 9 else j
-    doc.add_paragraph()
-
-    table2 = doc.add_table(rows=20, cols=10)
-    table2.style = 'TableGrid'
-    j = 0
-    R.sort()
-    for i in range(len(R)):
-        table2.rows[j].cells[i % 10].text = str(R[i])
-        j = j + 1 if i % 10 == 9 else j
-    doc.add_paragraph()
-
-    table3 = doc.add_table(rows=len(group), cols=3)
-    table3.style = 'TableGrid'
-    for i in range(len(group)):
-        row = table3.rows[i]
-        row.cells[0].text, row.cells[1].text, row.cells[2].text = "[{}, {}]".format(group[i][0][0], group[i][0][1]), str(group[i][1]), str(group[i][2])
-    doc.add_paragraph()
-
-    table4 = doc.add_table(rows=len(group), cols=3)
-    table4.style = 'TableGrid'
-    for i in range(len(assoc)):
-        row = table4.rows[i]
-        row.cells[0].text, row.cells[1].text, row.cells[2].text = str(assoc[i][0]), str(assoc[i][1]), str(assoc[i][2])
-    doc.save(file_name)
+    pass
+    # doc = docx.Document()
+    # table1 = doc.add_table(rows=20, cols=10)
+    # table1.style = 'TableGrid'
+    # j = 0
+    # for i in range(len(R)):
+    #     table1.rows[j].cells[i % 10].text = "%.6f" % (R[i])
+    #     j = j + 1 if i % 10 == 9 else j
+    # doc.add_paragraph()
+    #
+    # table2 = doc.add_table(rows=20, cols=10)
+    # table2.style = 'TableGrid'
+    # j = 0
+    # R.sort()
+    # for i in range(len(R)):
+    #     table2.rows[j].cells[i % 10].text = "%.6f" % (R[i])
+    #     j = j + 1 if i % 10 == 9 else j
+    # doc.add_paragraph()
+    #
+    # table3 = doc.add_table(rows=len(group), cols=3)
+    # table3.style = 'TableGrid'
+    # for i in range(len(group)):
+    #     row = table3.rows[i]
+    #     row.cells[0].text, row.cells[1].text, row.cells[2].text = "[{}, {}]".format(group[i][0][0], group[i][0][1]), str(group[i][1]), str(group[i][2])
+    # doc.add_paragraph()
+    #
+    # table4 = doc.add_table(rows=len(group), cols=3)
+    # table4.style = 'TableGrid'
+    # for i in range(len(assoc)):
+    #     row = table4.rows[i]
+    #     row.cells[0].text, row.cells[1].text, row.cells[2].text = str(assoc[i][0]), str(assoc[i][1]), str(assoc[i][2])
+    # doc.save(file_name)
 
 
 N = 200
 v = 54
 alpha = (-1)**v * 0.1 * v
 sigma = 0.01 * v + 1
+# alpha = 2.6
+# sigma = 1.26
 L = 3 + (-1)**v * 0.01 * v
 a = (-1)**v * 0.05*v
 b = a + 3
@@ -235,10 +232,12 @@ print(sorted(R1))
 group, assoc = get_raws(R1, min(R1), max(R1), N)
 print(group)
 print(assoc)
-print(sum([j for [_, _], j, _ in group]))
+print("Проверка: ", sum([j for [_, _], j, _ in group]))
 get_info(group, assoc, min(R1), max(R1))
 # draw(sorted(R1), group, (max(R1) - min(R1)) / (1 + round(log2(N))))
-save_to_docx(R1, group, assoc, "tables1.docx")
+# save_to_docx(R1, group, assoc, "tables1.docx")
+for (i, j), _, _ in group:
+    print(i, j)
 
 print("\nExponental: L = {}".format(L))  # may be 1/L
 # R2 = get_random_exponental(1/L, N)
@@ -286,10 +285,12 @@ print(sorted(R2))
 group, assoc = get_raws(R2, 0, max(R2), N)
 print(group)
 print(assoc)
-print(sum([j for [_, _], j, _ in group]))
+print("Проверка: ", sum([j for [_, _], j, _ in group]))
 get_info(group, assoc, 0, max(R2))
 # draw(sorted(R2), group, max(R2) / (1 + round(log2(N))))
-save_to_docx(R2, group, assoc, "tables2.docx")
+# save_to_docx(R2, group, assoc, "tables2.docx")
+for (i, j), _, _ in group:
+    print(i, j)
 
 print("\nUniform: a = {}, b = {}".format(a, b))
 # R3 = get_random_uniform(a, b, N)
@@ -331,7 +332,9 @@ print(sorted(R3))
 group, assoc = get_raws(R3, a, b, N)
 print(group)
 print(assoc)
-print(sum([j for [_, _], j, _ in group]))
+print("Проверка: ", sum([j for [_, _], j, _ in group]))
 get_info(group, assoc, a, b)
 # draw(sorted(R3), group, (b - a) / (1 + round(log2(N))))
-save_to_docx(R3, group, assoc, "tables3.docx")
+# save_to_docx(R3, group, assoc, "tables3.docx")
+for (i, j), _, _ in group:
+    print(i, j)
