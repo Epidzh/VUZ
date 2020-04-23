@@ -33,8 +33,8 @@ def get_x(slau):
     G[length-1] = (slau[length-1][0], slau[length-1][1], 0, slau[length-1][2])
     p = get_p(G, length)
     q = get_q(G, length)
-    print("P: ", p)
-    print("Q: ", q)
+    print("Прогоночные коэффициенты P: ", p)
+    print("Прогоночные коэффициенты Q: ", q)
     x = [0 for i in range(length)]
     x[-1] = q[-1]
     for i in range(length-2, -1, -1):
@@ -45,7 +45,11 @@ def get_x(slau):
 
 
 x = get_x(slau)
-print("X: ", x)
+print("\nОтветы: ")
+j = 1
+for i in x:
+    print("x{} = {}".format(j, i))
+    j+=1
 print("\nCHECK: ")
 for i in range(len(slau)):
     if i == 0:
