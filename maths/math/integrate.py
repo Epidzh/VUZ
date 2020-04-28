@@ -1,4 +1,5 @@
 from numpy import arange
+from math import fabs
 
 
 def func(x):
@@ -36,7 +37,10 @@ n = float(b - a) / h
 print("Точное значение интеграла = ~1.777")
 print("Метод прямоугольников (h)   = {}".format(rectangle(func, a, b, n)))
 print("Метод прямоугольников (h/2) = {}".format(rectangle(func, a, b, n * 2)))
-print("Метод трапеций (h)   = {}".format(trap(func, a, b, n)))
+print("Погрешность по правилу Рунге: ", fabs(rectangle(func, a, b, n*2) - rectangle(func, a, b, n)))
+print("\nМетод трапеций (h)   = {}".format(trap(func, a, b, n)))
 print("Метод трапеций (h/2) = {}".format(trap(func, a, b, n * 2)))
-print("Метод симпсона (h)   = {}".format(simpson(func, a, b, n)))
+print("Погрешность по правилу Рунге: ", fabs(trap(func, a, b, n * 2) - trap(func, a, b, n)))
+print("\nМетод симпсона (h)   = {}".format(simpson(func, a, b, n)))
 print("Метод симпсона (h/2) = {}".format(simpson(func, a, b, n * 2)))
+print("Погрешность по правилу Рунге: ", fabs(simpson(func, a, b, n * 2) - simpson(func, a, b, n)) / 7)

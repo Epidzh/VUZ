@@ -70,10 +70,14 @@ plt.plot(xx, yy3)
 legend.append("Третья степень")
 plt.legend(legend)
 plt.scatter(x, y)
-# sum1 = sum2 = sum3 = 0
-# for i in range(k0):
-#     sum1 += pow(y[i] - pol1.subs(q, x[i]), 2)
-#     sum2 += pow(y[i] - pol2.subs(q, x[i]), 2)
-#     sum3 += pow(y[i] - pol3.subs(q, x[i]), 2)
-# print(sum1, sum2, sum3)
+
+print("\nСумма квадратов отклонений:")
+sum1 = sum2 = sum3 = 0
+for i in range(k0):
+    sum1 += pow(y[i] - pol1.subs(q, x[i]), 2)
+    sum2 += pow(y[i] - pol2.subs(q, x[i]), 2)
+    sum3 += pow(y[i] - pol3.subs(q, x[i]), 2)
+print("Первая степень: ", sum1)
+print("Вторая степень: ", sum2)
+print("Третья степень: ", sum3)
 plt.show()
