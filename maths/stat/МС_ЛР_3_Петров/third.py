@@ -187,7 +187,7 @@ def get_data_from_docx(file_name):
 
 
 data = get_data_from_docx('1.docx')
-# first(data)
+first(data)
 
 data = get_data_from_docx('2.docx')
 second(data)
