@@ -178,7 +178,6 @@ def draw(R1, R2, R3, n, p):
 
     pyplot.show()
 
-
 N = 200
 v = 54
 n = 5 + (v % 16)

@@ -13,7 +13,7 @@ def get_table1(group, N, a, sigma):
     prev = 0
     for (i, j), nk, wk in group:
         pk = norm.cdf(j, a, sigma) - prev if k < len(group) - 1 else 1 - prev
-        table.append([k, j, (j - a) / sigma, norm.pdf(j, a, sigma) / sigma, norm.cdf(j, a, sigma), pk])
+        table.append([float("%.6f" % k), float("%.6f" % j), float("%.6f" % ((j - a) / sigma)),  float("%.6f" % (norm.pdf(j, a, sigma) / sigma)),float("%.6f" % norm.cdf(j, a, sigma)), float("%.6f" % pk)])
         prev = norm.cdf(j, a, sigma)
         k += 1
     return table
@@ -25,7 +25,7 @@ def get_table2(group, N, a, sigma):
     prev = 0
     for (i, j), ni, wi in group:
         pk = norm.cdf(j, a, sigma) - prev if k < 9 else 1 - prev
-        table.append([k, "[{}, {}]".format(i, j), wi, pk, fabs(wi - pk), N * ((wi - pk)**2) / pk])
+        table.append([k, "[{}, {}]".format(float("%.6f" % i), float("%.6f" % j)),float("%.6f" % wi), float("%.6f" % pk), float("%.6f" % fabs(wi - pk)), float("%.6f" %  (N * ((wi - pk)**2) / pk))])
         prev = norm.cdf(j, a, sigma)
         k += 1
     return table
@@ -64,7 +64,10 @@ def save_table_to_docx(data, file_name):
     i, j = 0, 0
     for row in data:
         for item in row:
-            table.rows[i].cells[j].text = str(item)
+            if item is float:
+                table.rows[i].cells[j].text = "%.6f" % item
+            else:
+                table.rows[i].cells[j].text = str(item)
             j += 1
         i += 1
         j = 0
@@ -107,7 +110,7 @@ def first(data):
     save_table_to_docx(table1, "3_1.docx")
     save_table_to_docx(table2, "3_1.docx")
 
-    # draw(group, h, a, sqrt(sigma))
+    draw(group, h, a, sqrt(sigma))
 
 
 def draw2(group, h, a, b):
@@ -125,14 +128,14 @@ def get_table3(group, N, m):
     k = 1
     for (i, j), ni, wi in group:
         pk = 1 / m
-        table.append([k, "[{}, {}]".format(i, j), wi, pk, fabs(wi - pk), N * ((wi - pk) ** 2) / pk])
+        table.append([k, "[{}, {}]".format(float("%.6f" % i), float("%.6f" % j)), float("%.6f" % wi), float("%.6f" % pk), float("%.6f" % fabs(wi - pk)), float("%.6f" % (N * ((wi - pk) ** 2) / pk))])
         k += 1
     return table
 
 
 def second(data):
-    a = 6.4
-    b = 12.4
+    a = 5.4
+    b = 11.4
     group, h = get_group(data, a, b)
     print(group)
     N = sum([k for (i, j), k, l in group])
@@ -158,7 +161,7 @@ def second(data):
     save_table_to_docx(table3, "3_2.docx")
     save_table_to_docx(group, "3_2.docx")
 
-    # draw2(group, h, a, b)
+    draw2(group, h, a, b)
 
 
 
@@ -187,7 +190,11 @@ def get_data_from_docx(file_name):
 
 
 data = get_data_from_docx('1.docx')
+for i in range(len(data)):
+    data[i] = float(data[i])
 first(data)
 
 data = get_data_from_docx('2.docx')
+for i in range(len(data)):
+    data[i] = float(data[i])
 second(data)

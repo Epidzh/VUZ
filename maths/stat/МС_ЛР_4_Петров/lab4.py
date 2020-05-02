@@ -1,6 +1,6 @@
 from matplotlib import pyplot
 from numpy import arange
-from math import fabs, sqrt
+from math import fabs, sqrt, log
 from scipy.stats import kstest, ks_2samp
 from scipy.stats import uniform
 
@@ -51,7 +51,7 @@ def first(data, a, b):
     print(kstest(data, lambda param: uniform.cdf(param, loc=a, scale=b-a)))
 
 
-def second(data1, data2):
+def second(data1, data2, a, b):
     N = len(data1)
     M = len(data2)
     fig = pyplot.figure()
@@ -91,8 +91,53 @@ def second(data1, data2):
     print(ks_2samp(data1, data2))
 
 
-def third():
-    pass
+def third(data, a, b):
+    N = len(data)
+    ans = [0 for i in range(9)]
+    ans[0], ans[1], ans[2] = a, b, N
+    dn_plus = -100
+    prev_dn_plus = -100
+    Fx = lambda x: (x - a) / (b - a) if  a <= x < b else 0 if x < a else 1
+    for j in range(1, N):
+        fn_xj = j / N
+        fn_xj_0 = (j - 1) / N
+        dn_plus = max([dn_plus, fn_xj - Fx(data[j]), fn_xj_0 - Fx(data[j])])
+        if dn_plus != prev_dn_plus:
+            prev_dn_plus = dn_plus
+            ans[3] = dn_plus
+            ans[4] = ans[3]*sqrt(N)
+            ans[5] = data[j]
+            ans[6] = Fx(data[j])
+            ans[7] = fn_xj
+            ans[8] = fn_xj_0
+    print(ans)
+    s_alpha = sqrt(-0.5 * log(0.05))
+    print(s_alpha)
+
+
+def fourth(data, a, b):
+    N = len(data)
+    ans = [0 for i in range(9)]
+    ans[0], ans[1], ans[2] = a, b, N
+    dn_plus = -100
+    prev_dn_plus = -100
+    Fx = lambda x: (x - a) / (b - a) if a <= x < b else 0 if x < a else 1
+    for j in range(1, N):
+        fn_xj = j / N
+        fn_xj_0 = (j - 1) / N
+        dn_plus = max([dn_plus, Fx(data[j]) - fn_xj, Fx(data[j]) - fn_xj_0])
+        if dn_plus != prev_dn_plus:
+            prev_dn_plus = dn_plus
+            ans[3] = dn_plus
+            ans[4] = ans[3] * sqrt(N)
+            ans[5] = data[j]
+            ans[6] = Fx(data[j])
+            ans[7] = fn_xj
+            ans[8] = fn_xj_0
+    print(ans)
+    s_alpha = sqrt(-0.5 * log(0.05))
+    print(s_alpha)
+
 
 def get_data_from_docx(file_name):
     from docx import Document
@@ -105,13 +150,38 @@ def get_data_from_docx(file_name):
     return data
 
 
-a = 6.4
-b = 12.4
+def save_table_to_docx(data, file_name):
+    import docx
+    pass
+    try:
+        doc = docx.Document(file_name)
+    except docx.opc.exceptions.PackageNotFoundError:
+        doc = docx.Document()
+    table = doc.add_table(rows=len(data) // 10, cols=10)
+    # table.style = 'TableGrid'
+    i, j = 0, 0
+    for item in data:
+        table.rows[i].cells[j % 10].text = str(item)
+        j += 1
+        if j % 10 == 0:
+            j = 0
+            i += 1
+    doc.add_paragraph()
+    doc.save(file_name)
+
+a = 5.4
+b = 11.4
 # a = 3.6
 # b = 10.6
 
 data1 = get_data_from_docx('UD-1.docx')
-first(sorted(data1), a, b)
-
 data2 = get_data_from_docx('UD-2.docx')
-second(sorted(data1), sorted(data2))
+# save_table_to_docx(data1, "result1.docx")
+# save_table_to_docx(sorted(data1), "result1.docx")
+# save_table_to_docx(data2, "result2.docx")
+# save_table_to_docx(sorted(data2), "result2.docx")
+
+first(sorted(data1), a, b)
+second(sorted(data1), sorted(data2), a, b)
+third(sorted(data1), a, b)
+fourth(sorted(data1), a, b)

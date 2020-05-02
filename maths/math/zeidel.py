@@ -1,4 +1,5 @@
-from math import fabs
+from math import fabs, sqrt
+import numpy as np
 
 
 def check(tmp, ans, eps):
@@ -11,32 +12,55 @@ def check(tmp, ans, eps):
         return True
 
 
-def zeidel(slau):
-    ans = [slau[0][0] if i == 0 else 0 for i in range(len(slau))]
-    # print(ans)
-    prev = [0 for i in range(N)]
-    while check(prev, ans, eps):
-        prev = ans.copy()
-        for i in range(len(slau)):
-            rez = slau[i][0]
-            prev_index = 0
-            for j in slau[i][1:]:
-                if prev_index == i:
-                    prev_index += 1
-                rez += j * prev[prev_index]
-                prev_index += 1
-            ans[i] = rez
-    return ans
+# def zeidel(slau):
+#     iterations = 0
+#     ans = [slau[0][0] if i == 0 else 0 for i in range(len(slau))]
+#     # print(ans)
+#     prev = [0 for i in range(N)]
+#     while check(prev, ans, eps):
+#         iterations += 1
+#         prev = ans.copy()
+#         for i in range(len(slau)):
+#             rez = slau[i][0]
+#             prev_index = 0
+#             for j in slau[i][1:]:
+#                 if prev_index == i:
+#                     prev_index += 1
+#                 rez += j * prev[prev_index]
+#                 prev_index += 1
+#             ans[i] = rez
+#     print("Количество итераций: ", iterations)
+#     return ans
+
+def seidel(A, b, eps):
+    n = len(A)
+    x = [.0 for i in range(n)]
+
+    converge = False
+    iterations = 0
+    while not converge:
+        iterations += 1
+        x_new = np.copy(x)
+        for i in range(n):
+            s1 = sum(A[i][j] * x_new[j] for j in range(i))
+            s2 = sum(A[i][j] * x[j] for j in range(i + 1, n))
+            x_new[i] = (b[i] - s1 - s2) / A[i][i]
+
+        converge = sqrt(sum((x_new[i] - x[i]) ** 2 for i in range(n))) <= eps
+        x = x_new
+
+    print("Количество итераций: ", iterations)
+    return x
 
 
 def simple(slau, a, b):
+    iterations = 0
     alpha = [[-a[i][j]/a[i][i] if i != j else 0 for j in range(len(a[i]))] for i in range(len(a))]
-    print(alpha)
     beta = [b[i] / a[i][i] for i in range(len(b))]
-    print(beta)
     ans = [0 for i in beta]
     prev = []
     while check(prev, ans, eps):
+        iterations += 1
         prev = ans.copy()
         for i in range(len(alpha)):
             sm = 0
@@ -44,10 +68,12 @@ def simple(slau, a, b):
                 sm += alpha[i][j] * prev[j]
             sm += beta[i]
             ans[i] = sm
+    print("Количество итераций: ", iterations)
     return ans
 
 
-def print_ans(ans, a):
+def print_ans(ans, a, b):
+    results = []
     print("Ответы: ")
     for i in enumerate(ans):
         print("x{} = {}".format(i[0]+1, i[1]))
@@ -66,10 +92,11 @@ def print_ans(ans, a):
                 else:
                     print(" + {} * {}".format(fabs(j[1]), fabs(ans[j[0]])), end=' ')
         print("= ", sm)
+        results.append(sm)
+    print("Погрешность результатов: ", [fabs(b[i] - results[i]) for i in range(len(b))])
 
 N = 4
 eps = 0.01
-
 a = [
     [10, 0, 2, 4],
     [2, 16, -3, 8],
@@ -78,18 +105,20 @@ a = [
 ]
 
 b = [110, 128, 102, 81]
+print("Задаваемая точность: ", eps)
+print('\nЭталонные значения: ', b)
 
 slau = []
 for i in range(len(a)):
     slau.append([-a[i][j] / a[i][i] for j in range(len(a[i])) if j != i])
     slau[-1].insert(0, b[i] / a[i][i])
-# print(slau)
 
+
+print("\nМетод простой итерации: \n")
 ans = simple(slau, a, b)
-print("Метод простой итерации: ")
-print_ans(ans, a)
+print_ans(ans, a, b)
 
-ans = zeidel(slau)
-print("\nМетод Зейделя: ")
-print_ans(ans, a)
-print('Эталонные значения: ', b)
+print("\nМетод Зейделя: \n")
+# ans = zeidel(slau)
+ans = seidel(a, b, eps)
+print_ans(ans, a, b)
