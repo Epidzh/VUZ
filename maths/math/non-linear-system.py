@@ -17,10 +17,11 @@ def is_continue(x1, old_x1, x2, old_x2, eps):
 
 def simple(system, eps=0.01):
     new_system = [lambda x1, x2: (1 - x2**2) / (3*x1 - 1), lambda x: tan(x)]
-    x1 = 1
+    x1 = -0.5
     old_x1 = 0
-    x2 = 1
+    x2 = -0.5
     old_x2 = 0
+    pribl = [x1, x2]
 
     iters = 0
     while is_continue(x1, old_x1, x2, old_x2, eps):
@@ -28,7 +29,9 @@ def simple(system, eps=0.01):
         old_x2 = x2
         x1 = new_system[0](old_x1, old_x2)
         x2 = new_system[1](old_x1)
+        # print(x1, x2)
         iters += 1
+    print("Начальные приближения: ", pribl)
     print("\nИтераций: ", iters)
     return [x1, x2]
 
@@ -37,10 +40,11 @@ def first_center(y2, y0, h):
     return (y2 - y0) / (2 * h)
 
 def newton(system, eps=0.01):
-    x1 = 1
+    x1 = 0.5
     old_x1 = 0
-    x2 = 1
+    x2 = 0.5
     old_x2 = 0
+    pribl = [x1, x2]
 
     iters = 0
     while is_continue(x1, old_x1, x2, old_x2, eps):
@@ -52,11 +56,13 @@ def newton(system, eps=0.01):
         x2 = old_x2 + delta_x2
         # print(x1, x2)
         iters += 1
+    print("Начальные приближения: ", pribl)
     print("\nИтераций: ", iters)
     return [x1, x2]
 
 system = [first, second]
 eps = 0.0001
+print("Вариант - 4\n")
 print("Точность: ", eps)
 
 print("\nМетод простой итерации: ")

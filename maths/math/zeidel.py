@@ -35,6 +35,7 @@ def check(tmp, ans, eps):
 def seidel(A, b, eps):
     n = len(A)
     x = [.0 for i in range(n)]
+    print("Начальное приближение: ", x)
 
     converge = False
     iterations = 0
@@ -48,6 +49,7 @@ def seidel(A, b, eps):
 
         converge = sqrt(sum((x_new[i] - x[i]) ** 2 for i in range(n))) <= eps
         x = x_new
+        # print(x)
 
     print("Количество итераций: ", iterations)
     return x
@@ -58,6 +60,7 @@ def simple(slau, a, b):
     alpha = [[-a[i][j]/a[i][i] if i != j else 0 for j in range(len(a[i]))] for i in range(len(a))]
     beta = [b[i] / a[i][i] for i in range(len(b))]
     ans = [0 for i in beta]
+    print("Начальное приближение: ", ans)
     prev = []
     while check(prev, ans, eps):
         iterations += 1
@@ -68,6 +71,7 @@ def simple(slau, a, b):
                 sm += alpha[i][j] * prev[j]
             sm += beta[i]
             ans[i] = sm
+        # print(ans)
     print("Количество итераций: ", iterations)
     return ans
 
@@ -105,7 +109,8 @@ a = [
 ]
 
 b = [110, 128, 102, 81]
-print("Задаваемая точность: ", eps)
+print("Вариант - ", 4)
+print("\nЗадаваемая точность: ", eps)
 print('\nЭталонные значения: ', b)
 
 slau = []
