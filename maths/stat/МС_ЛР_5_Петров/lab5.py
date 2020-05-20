@@ -1,6 +1,11 @@
-from scipy.stats import norm, t
+from scipy.stats import norm, t, f, f_oneway, ttest_ind, ttest_rel
 from math import sqrt, fabs
-
+from scipy.stats import bartlett, levene
+from statsmodels.formula.api import ols
+import statsmodels.api as stm
+import numpy as np
+from sklearn.feature_selection import f_classif
+import pandas as pd
 
 def save_table_to_docx(data, file_name):
     import docx
@@ -51,7 +56,9 @@ def first(data, a, sigma):
     norm1 = norm(0, 1)
     N = len(data)
     u1 = sum(data) / N
-    c = a + (sigma / sqrt(N)) * (1 / (norm1.pdf(1 - alpha)))
+    f = norm1.pdf(1 - alpha)
+    c = a
+    c += sigma / (sqrt(N) * f)
     print("U1 = ", u1)
     print("C = ", c)
     table = []
@@ -68,17 +75,17 @@ def get_tnm(N, M, sr1, sr2, disp1, disp2):
     return ((sr1 - sr2) / sqrt(N * (disp1 - sr1**2) + M * (disp2 - sr2**2))) * sqrt(M * N * (N + M - 2) / (N + M))
 
 
-def second(data):
-    data1, data2, data3 = [], [], []
-    N = len(data) // 3
-    print(N)
-    for i in enumerate(data):
-        if i[0] % 3 == 0:
-            data1.append(i[1])
-        elif i[0] % 3 == 1:
-            data2.append(i[1])
-        else:
-            data3.append(i[1])
+def second(data1, data2, data3):
+    # data1, data2, data3 = [], [], []
+    # N = len(data) // 3
+    # print(N)
+    # for i in enumerate(data):
+    #     if i[0] % 3 == 0:
+    #         data1.append(i[1])
+    #     elif i[0] % 3 == 1:
+    #         data2.append(i[1])
+    #     else:
+    #         data3.append(i[1])
 
     sr1 = sum(data1) / len(data1)
     sr2 = sum(data2) / len(data2)
@@ -117,6 +124,91 @@ def second(data):
     save_table_to_docx(table, 'results2.docx')
 
 
+def third(data, data1, data2, data3):
+    m = 3
+    N = len(data) / m
+    u = 0
+    for i in data:
+        u += i
+    # print(u)
+    u /= N*m
+    # print(u)
+    uj = [sum(data1) / len(data1), sum(data2) / len(data2), sum(data3) / len(data3)]
+    so = 0
+    sf = N * ((uj[0] - u)**2 + (uj[1] - u)**2 + (uj[2] - u)**2)
+    for i in data:
+        so += ((i - u)**2)
+    s_ost = so - sf
+    fnm = (sf / (m-1)) / (s_ost / (m*(N-1)))
+    k1, k2 = m-1, m*(N-1)
+    print("%.6f" % so)
+    print("%.6f" % sf)
+    print("%.6f" % s_ost)
+    print("%.6f" % (sf / (m-1)))
+    print("%.6f" % (s_ost / (m*(N-1))))
+    print("%.6f" % k1)
+    print("%.6f" % k2)
+    print("%.6f" % fnm)
+
+    print("z: ", f.ppf(0.95, k1, k2))  # hz
+    print("Гипотеза принята" if fnm < f.ppf(0.95, k1, k2) else "Гипотеза НЕ принята")
+    pass
+
+
+def fourth(data, data1, data2, data3):
+    print("Задача4: ")
+    N = len(data1)
+    m = 3
+    z = f.ppf(0.975, N - 1, N - 1)
+    print(z)
+
+    x, y = sum(data1) / N, sum(data2) / N
+    x2, y2 = sum([i**2 for i in data1]) / N, sum([i**2 for i in data2]) / N
+    s2x, s2y = (N * (x2 - x**2)) / (N-1), (N * (y2 - y**2)) / (N-1)
+    s1, s2 = max(s2x, s2y), min(s2x, s2y)
+    k1 = k2 = N - 1
+    fnm = s1 / s2
+    print("%.6f" % s1, "%.6f" % s2, "%.6f" % k1, "%.6f" % k2, "%.6f" % fnm)
+    print("Гипотеза принята" if fnm < z else "Гипотеза НЕ принята")
+
+    x, y = sum(data1) / N, sum(data3) / N
+    x2, y2 = sum([i ** 2 for i in data1]) / N, sum([i ** 2 for i in data3]) / N
+    s2x, s2y = (N * (x2 - x ** 2)) / (N - 1), (N * (y2 - y ** 2)) / (N - 1)
+    s1, s2 = max(s2x, s2y), min(s2x, s2y)
+    k1 = k2 = N - 1
+    fnm = s1 / s2
+    print("%.6f" % s1, "%.6f" % s2, "%.6f" % k1, "%.6f" % k2, "%.6f" % fnm)
+    print("Гипотеза принята" if fnm < z else "Гипотеза НЕ принята")
+
+    x, y = sum(data2) / N, sum(data3) / N
+    x2, y2 = sum([i ** 2 for i in data2]) / N, sum([i ** 2 for i in data3]) / N
+    s2x, s2y = (N * (x2 - x ** 2)) / (N - 1), (N * (y2 - y ** 2)) / (N - 1)
+    s1, s2 = max(s2x, s2y), min(s2x, s2y)
+    k1 = k2 = N - 1
+    fnm = s1 / s2
+    print("%.6f" % s1, "%.6f" % s2, "%.6f" % k1, "%.6f" % k2, "%.6f" % fnm)
+    print("Гипотеза принята" if fnm < z else "Гипотеза НЕ принята")
+    pass
+
+
+def fifth(data, data1, data2, data3):
+    print(f_oneway(data1, data2, data3))
+    print(ttest_ind(data1, data2))
+    print(ttest_ind(data1, data3))
+    print(ttest_ind(data2, data3))
+    print(ttest_ind(data1, data2, equal_var=False))
+    print(ttest_ind(data1, data3, equal_var=False))
+    print(ttest_ind(data2, data3, equal_var=False))
+
+    print(bartlett(data1, data2, data3))
+    print(bartlett(data1, data2))
+    print(bartlett(data1, data3))
+    print(bartlett(data2, data3))
+
+    z = f.ppf(0.975, N - 1, N - 1)
+    print(z)
+
+
 a = 6.1
 sigma = 1.46
 data = get_data_from_docx('1.docx')
@@ -124,9 +216,28 @@ table = get_table_from_docx('1.docx')
 save_table_to_docx(table, 'results1.docx')
 print(data)
 first(data, a, sigma)
-
+#
 data = get_data_from_docx('2.docx')
-table = get_table_from_docx('2.docx')
-save_table_to_docx(table, 'results2.docx')
+data1, data2, data3 = [], [], []
+N = len(data) // 3
+print(N)
+for i in enumerate(data):
+    if i[0] % 3 == 0:
+        data1.append(i[1])
+    elif i[0] % 3 == 1:
+        data2.append(i[1])
+    else:
+        data3.append(i[1])
 print(data)
-second(data)
+
+# table = get_table_from_docx('2.docx')
+# save_table_to_docx(table, 'results2.docx')
+# print(data)
+# second(data1, data2, data3)
+
+# third(data, data1, data2, data3)
+# fourth(data, data1, data2, data3)
+# print(data1)
+# print(data2)
+# print(data3)
+# fifth(data, data1, data2, data3)

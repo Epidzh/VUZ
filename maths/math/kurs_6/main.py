@@ -35,13 +35,11 @@ def newton(point, x):
 
     n = len(x)
     k = coeffs(x)
-    # print(k)
     ans = k[0]
     p = 1
     for i in range(1, n):
         p = p * (point - x[i - 1])
         ans += k[i] * p
-    # print(ans)
     return ans
 
 
@@ -57,16 +55,18 @@ def main():
     print(y)
     pyplot.grid(True)
     pyplot.plot(x, y, color="#00AA00", label='F_x')
-    # pyplot.plot(args, [f_x(i) for i in args], color="#0000AA", label='f_x')
-    # pyplot.plot(x, [P(i) for i in x], color="#AA0000", label='newton')
+    pyplot.plot(args, [f_x(i) for i in args], color="#0000AA", label='f_x')
+    pyplot.plot(x, [P(i) for i in x], color="#AA0000", label='newton')
     pyplot.legend()
-    # pyplot.show()
+    pyplot.show()
     print([P(i)for i in args])
     print(P(1.1))
 
     F = (sqrt(5) - 1) / 2
+    table = []
     while fabs(b - a) > eps:
         x1, x2 = a + (1 - F) * (b - a), a + F*(b - a)
+        table.append([a, b, x1, x2])
         if function(x1, P) >= function(x2, P):
             a = x1
         else:
@@ -74,6 +74,9 @@ def main():
     print("Минимум функции: ", (a + b) / 2)
     print("Значение функции: ", function((a+b) / 2, P))
     print("Точное значение: ", function(1.05, P))
+    print(P((a+b) / 2))
+    for i in table:
+        print(i)
 
 
 if __name__ == "__main__":
