@@ -110,7 +110,7 @@ def first(data):
     save_table_to_docx(table1, "3_1.docx")
     save_table_to_docx(table2, "3_1.docx")
 
-    draw(group, h, a, sqrt(sigma))
+    # draw(group, h, a, sqrt(sigma))
 
 
 def draw2(group, h, a, b):
@@ -134,12 +134,12 @@ def get_table3(group, N, m):
 
 
 def second(data):
-    a = 5.4
-    b = 11.4
+    a = 5.0
+    b = 14.0
     group, h = get_group(data, a, b)
     print(group)
     N = sum([k for (i, j), k, l in group])
-    m = (1 + round(log2(N)))
+    m = (1 + int(log2(N)))
     h = (b - a) / m
     table3 = get_table3(group, N, m)
 
@@ -167,7 +167,7 @@ def second(data):
 
 def get_group(data, a = None, b = None):
     N = len(data)
-    m = 1 + round(log2(N))
+    m = 1 + int(log2(N))
     a0 = min(data) if a is None else a
     am = max(data) if b is None else b
     h = (am - a0) / m
@@ -189,12 +189,12 @@ def get_data_from_docx(file_name):
     return data
 
 
-data = get_data_from_docx('1.docx')
+# data = get_data_from_docx('1.docx')
 for i in range(len(data)):
     data[i] = float(data[i])
 first(data)
 
-data = get_data_from_docx('2.docx')
+# data = get_data_from_docx('2.docx')
 for i in range(len(data)):
     data[i] = float(data[i])
 second(data)

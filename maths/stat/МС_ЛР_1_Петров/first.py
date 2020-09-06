@@ -77,7 +77,7 @@ def get_med(R):
             ans = R[i][0]
             break
         elif get_func(R, R[i][0]) == 0.5:
-            ans = 0.5*(R[i][0] + R[i+1][0] + 1)
+            ans = 0.5*(R[i][0] + R[i+1][0])
             break
     return ans
 
@@ -176,10 +176,10 @@ def draw(R1, R2, R3, n, p):
     pyplot.plot([i for i, _, _ in R3], [get_teoretic_poisson(l, i) for i, _, _ in R3], color='red')
     draw_arrows(pyplot, R3)
 
-    pyplot.show()
+    # pyplot.show()
 
 N = 200
-v = 54
+v = 44
 n = 5 + (v % 16)
 p = 0.3 + 0.005 * v
 print("n={} ; p={}".format(n, p))
@@ -192,7 +192,20 @@ print(R1)
 get_info(R1, N)
 
 print("Geom")
-geom = get_random_geometric(p, N)
+# geom = get_random_geometric(p, N)
+geom = []
+for _ in range(100):
+    geom.append(0)
+for _ in range(51):
+    geom.append(2)
+for _ in range(28):
+    geom.append(2)
+for _ in range(13):
+    geom.append(3)
+for _ in range(6):
+    geom.append(4)
+for _ in range(2):
+    geom.append(5)
 print(geom)
 R2 = get_xi_ni_wi(geom, N)
 print(R2)

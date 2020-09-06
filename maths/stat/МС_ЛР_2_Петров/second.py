@@ -23,7 +23,8 @@ def get_random_uniform(a, b, N):
 
 """Получение рядов"""
 def get_raws(R, a0, am, N):
-    m = 1 + round(log2(N))
+    m = 1 + int(log2(N))
+    print(m)
     d = (am - a0) / m
     interval_raw = []
     for i, j in [[i, i + d] for i in arange(a0, am, d)]:
@@ -148,6 +149,7 @@ def draw(R, group, h):
     _, ax = pyplot.subplots(2, 1)
     ax[0].grid(True)
     ax[1].grid(True)
+    print(group)
     ax[0].bar(x1, [wi / h for (_, _), _, wi in group], width=h, edgecolor='black')
     for i in range(len(R) - 1):
         y = get_emp_func(R, R[i])
@@ -273,7 +275,7 @@ print(group)
 print(assoc)
 print("Проверка: ", sum([j for [_, _], j, _ in group]))
 info = get_info(group, assoc, min(R1), max(R1))
-# draw(sorted(R1), group, (max(R1) - min(R1)) / (1 + round(log2(N))))
+draw(sorted(R1), group, (max(R1) - min(R1)) / (1 + int(log2(N))))
 
 i, j = 0, 0
 table = [[]]
@@ -286,12 +288,12 @@ for item in sorted(R1):
         table.append([])
 
 # save_table_to_docx(table, "tables1.docx")
-# save_table_to_docx(group, "tables1.docx")
-# save_table_to_docx(assoc, "tables1.docx")
-# save_table_to_docx(info, "tables1.docx")
-# table = []
-# for (i, j), ni, wi in group:
-#     table.append(["[{}, {}]".format("%6.f" % i, "%6.f" % j), wi, ])
+save_table_to_docx(group, "tables1.docx")
+save_table_to_docx(assoc, "tables1.docx")
+save_table_to_docx(info, "tables1.docx")
+table = []
+for (i, j), ni, wi in group:
+    table.append(["[{}, {}]".format("%6.f" % i, "%6.f" % j), wi, ])
 norm1 = norm(alpha, sigma)
 sm = 0
 for (i, j), _, wi in group:
@@ -346,20 +348,20 @@ R2 = [0.0006404429812036956, 0.0022024807536829725, 0.0023931246976434013, 0.005
 shuffle(R2)
 i, j = 0, 0
 table = [[]]
-for item in R2:
-    table[-1].append(float("%.6f" % item))
-    j += 1
-    if j % 10 == 0:
-        j = 0
-        i += 1
-        table.append([])
+# for item in R2:
+#     table[-1].append(float("%.6f" % item))
+#     j += 1
+#     if j % 10 == 0:
+#         j = 0
+#         i += 1
+#         table.append([])
 # save_table_to_docx(table, "tables2.docx")
 group, assoc = get_raws(R2, 0, max(R2), N)
 print(group)
 print(assoc)
 print("Проверка: ", sum([j for [_, _], j, _ in group]))
 info = get_info(group, assoc, 0, max(R2))
-# draw(sorted(R2), group, max(R2) / (1 + round(log2(N))))
+draw(sorted(R2), group, max(R2) / (1 + int(log2(N))))
 i, j = 0, 0
 table = [[]]
 for item in sorted(R2):
@@ -371,9 +373,9 @@ for item in sorted(R2):
         table.append([])
 
 # save_table_to_docx(table, "tables2.docx")
-# save_table_to_docx(group, "tables2.docx")
-# save_table_to_docx(assoc, "tables2.docx")
-# save_table_to_docx(info, "tables2.docx")
+save_table_to_docx(group, "tables2.docx")
+save_table_to_docx(assoc, "tables2.docx")
+save_table_to_docx(info, "tables2.docx")
 ex = lambda x: exp(-L*x)
 sm = 0
 for (i, j), _, wi in group:
@@ -438,7 +440,7 @@ print(group)
 print(assoc)
 print("Проверка: ", sum([j for [_, _], j, _ in group]))
 info = get_info(group, assoc, a, b)
-# draw(sorted(R3), group, (b - a) / (1 + round(log2(N))))
+draw(sorted(R3), group, (b - a) / (1 + int(log2(N))))
 i, j = 0, 0
 table = [[]]
 for item in sorted(R3):
@@ -450,9 +452,9 @@ for item in sorted(R3):
         table.append([])
 
 # save_table_to_docx(table, "tables3.docx")
-# save_table_to_docx(group, "tables3.docx")
-# save_table_to_docx(assoc, "tables3.docx")
-# save_table_to_docx(info, "tables3.docx")
+save_table_to_docx(group, "tables3.docx")
+save_table_to_docx(assoc, "tables3.docx")
+save_table_to_docx(info, "tables3.docx")
 
 u = uniform(a, b-a)
 sm = 0

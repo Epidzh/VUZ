@@ -209,14 +209,13 @@ def fifth(data, data1, data2, data3):
     print(z)
 
 
-a = 6.1
-sigma = 1.46
+a = 5.1
+sigma = 1.56
 data = get_data_from_docx('1.docx')
 table = get_table_from_docx('1.docx')
 save_table_to_docx(table, 'results1.docx')
 print(data)
 first(data, a, sigma)
-#
 data = get_data_from_docx('2.docx')
 data1, data2, data3 = [], [], []
 N = len(data) // 3
@@ -230,14 +229,14 @@ for i in enumerate(data):
         data3.append(i[1])
 print(data)
 
-# table = get_table_from_docx('2.docx')
-# save_table_to_docx(table, 'results2.docx')
-# print(data)
-# second(data1, data2, data3)
+table = get_table_from_docx('2.docx')
+save_table_to_docx(table, 'results2.docx')
+print(data)
+second(data1, data2, data3)
 
-# third(data, data1, data2, data3)
-# fourth(data, data1, data2, data3)
-# print(data1)
-# print(data2)
-# print(data3)
-# fifth(data, data1, data2, data3)
+third(data, data1, data2, data3)
+fourth(data, data1, data2, data3)
+print(data1)
+print(data2)
+print(data3)
+fifth(data, data1, data2, data3)

@@ -1,4 +1,4 @@
-from math import sin, fabs, sqrt
+from math import sin, fabs, sqrt, exp
 from numpy import arange, arcsin
 
 
@@ -6,7 +6,8 @@ interval = (-10, 10)
 
 
 def function(x):
-    return sin(x) - x*x + 1
+    return x*exp(-x) - 1/(2*exp(1))
+    # return sin(x) + x**2 - 1
 
 
 def half_dev_method(func, interval, eps=0.0001, h=0.1):
@@ -129,22 +130,22 @@ def secant_method(func, interval, eps=0.001, h=0.1):
 print("Вариант - ", 4)
 eps = 0.00001
 anss = [-0.636733, 1.40962]
-print("\nПогрешность: 0.00001\n")
-print("\nМетод половинного деления:\n")
-ans = half_dev_method(function, interval, eps)
-print("\nКорни: x1={} ; x2={}".format(ans[0], ans[1]))
-print("Подстановка: ")
-print("sin({}) - {}**2 + 1 = {}".format(ans[0], fabs(ans[0]), function(ans[0])))
-print("sin({}) - {}**2 + 1 = {}".format(ans[1], fabs(ans[1]), function(ans[1])))
-print("\nПогрешности: для x1 - {} ; для x2 - {}".format(fabs(ans[0] - anss[0]), fabs(ans[1] - anss[1])))
+# print("\nПогрешность: 0.00001\n")
+# print("\nМетод половинного деления:\n")
+# ans = half_dev_method(function, interval, eps)
+# print("\nКорни: x1={} ; x2={}".format(ans[0], ans[1]))
+# print("Подстановка: ")
+# print("sin({}) - {}**2 + 1 = {}".format(ans[0], fabs(ans[0]), function(ans[0])))
+# print("sin({}) - {}**2 + 1 = {}".format(ans[1], fabs(ans[1]), function(ans[1])))
+# print("\nПогрешности: для x1 - {} ; для x2 - {}".format(fabs(ans[0] - anss[0]), fabs(ans[1] - anss[1])))
 
-print("\n\nМетод простой итерации:\n")
-ans = simple_iteration_method(function, interval, eps)
-print("\nКорни: x1={} ; x2={}".format(ans[0], ans[1]))
-print("Подстановка: ")
-print("sin({}) - {}**2 + 1 = {}".format(ans[0], fabs(ans[0]), function(ans[0])))
-print("sin({}) - {}**2 + 1 = {}".format(ans[1], fabs(ans[1]), function(ans[1])))
-print("\nПогрешности: для x1 - {} ; для x2 - {}".format(fabs(ans[0] - anss[0]), fabs(ans[1] - anss[1])))
+# print("\n\nМетод простой итерации:\n")
+# ans = simple_iteration_method(function, interval, eps)
+# print("\nКорни: x1={} ; x2={}".format(ans[0], ans[1]))
+# print("Подстановка: ")
+# print("sin({}) - {}**2 + 1 = {}".format(ans[0], fabs(ans[0]), function(ans[0])))
+# print("sin({}) - {}**2 + 1 = {}".format(ans[1], fabs(ans[1]), function(ans[1])))
+# print("\nПогрешности: для x1 - {} ; для x2 - {}".format(fabs(ans[0] - anss[0]), fabs(ans[1] - anss[1])))
 
 print("\n\nМетод Ньютона:\n")
 ans = newton_method(function, interval, eps)
@@ -154,10 +155,10 @@ print("sin({}) - {}**2 + 1 = {}".format(ans[0], fabs(ans[0]), function(ans[0])))
 print("sin({}) - {}**2 + 1 = {}".format(ans[1], fabs(ans[1]), function(ans[1])))
 print("\nПогрешности: для x1 - {} ; для x2 - {}".format(fabs(ans[0] - anss[0]), fabs(ans[1] - anss[1])))
 
-print("\n\nМетод секущих:\n",)
-ans = secant_method(function, interval, eps)
-print("\nКорни: x1={} ; x2={}".format(ans[0], ans[1]))
-print("Подстановка: ")
-print("sin({}) - {}**2 + 1 = {}".format(ans[0], fabs(ans[0]), function(ans[0])))
-print("sin({}) - {}**2 + 1 = {}".format(ans[1], fabs(ans[1]), function(ans[1])))
-print("\nПогрешности: для x1 - {} ; для x2 - {}".format(fabs(ans[0] - anss[0]), fabs(ans[1] - anss[1])))
+# print("\n\nМетод секущих:\n",)
+# ans = secant_method(function, interval, eps)
+# print("\nКорни: x1={} ; x2={}".format(ans[0], ans[1]))
+# print("Подстановка: ")
+# print("sin({}) - {}**2 + 1 = {}".format(ans[0], fabs(ans[0]), function(ans[0])))
+# print("sin({}) - {}**2 + 1 = {}".format(ans[1], fabs(ans[1]), function(ans[1])))
+# print("\nПогрешности: для x1 - {} ; для x2 - {}".format(fabs(ans[0] - anss[0]), fabs(ans[1] - anss[1])))
