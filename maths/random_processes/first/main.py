@@ -8,6 +8,7 @@ matrix = np.array([[0.7, 0, 0.3], [0.135, 0.123, 0.742], [0.552, 0, 0.448]])
 # 1 task
 def getMatrixes(matrix):
     ans = [matrix]
+    deltas = []
     matrix_old = matrix
     delta = 0.00001
     delta_k = 0
@@ -19,14 +20,16 @@ def getMatrixes(matrix):
         for i in range(len(matrix)):
             delta_k = max([fabs(matrix_new[i][k] - matrix_old[i][k]) for k in range(len(matrix))])
         matrix_old = matrix_new
-    print(delta_k)
-    return [ans, n]
+        deltas.append(delta_k)
+    return [ans, n, deltas]
 
 
-matrixes, n = getMatrixes(matrix)
+matrixes, n, deltas = getMatrixes(matrix)
 print(n)
 for i in matrixes:
     print(i)
     print()
+
+print(deltas)
 
 # 2 task
