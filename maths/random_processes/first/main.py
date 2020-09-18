@@ -69,14 +69,13 @@ vectors, m_min, deltas = getMatrixes3(matrix, [0, 1, 0], r)
 print("010:")
 print(vectors)
 print(m_min)
-print(list(map(convert_float, deltas)))
-# print(vectors)
-# print(getMatrixes3(matrix, [0, 1, 0], r))
+print(deltas)
 # (0, 0, 1)
 vectors, m_min, deltas = getMatrixes3(matrix, [0, 0, 1], r)
 print("001:")
 print(vectors)
 print(m_min)
 print(deltas)
-# print(vectors)
-# print(getMatrixes3(matrix, [0, 0, 1], r))
+
+# 4 task
+
