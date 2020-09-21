@@ -9,6 +9,10 @@ def func(x, y):
 		return (y / x**2) + exp(x - 1 / x)
 
 
+def funcOrigin(x):
+	return (0.367879 * exp(1))*exp(-1/x) + exp(x - (1/x))
+
+
 def eiler():
 	x1, x2 = arange(1, 2, h1), arange(1, 2, h2)
 	y1, y2 = [1.367879], [1.367879]
@@ -30,8 +34,8 @@ def eiler2():
 		y3.append(y3[-1] + (h1 / 2)* (func(x3[point_num], y3[-1]) + func(x3[point_num+1], new_y)))
 
 	for point in range(len(x4) - 1):
-		new_y = y4[-1] + h2*func(x4[point_num], y4[-1])
-		y4.append(y4[-1] + (h2 / 2)* (func(x4[point_num], y4[-1]) + func(x4[point_num+1], new_y)))
+		new_y = y4[-1] + h2*func(x4[point], y4[-1])
+		y4.append(y4[-1] + (h2 / 2)* (func(x4[point], y4[-1]) + func(x4[point+1], new_y)))
 
 	return [x3, y3, x4, y4]
 
@@ -44,5 +48,6 @@ plot.plot(x1, y1, color="#FF0000", label="first h=0.1")
 plot.plot(x2, y2, color="#00FF00", label="first h=0.01")
 plot.plot(x3, y3, color="#0000FF", label="second h=0.1")
 plot.plot(x4, y4, color="#00FFFF", label="second h=0.01")
+plot.plot(arange(1, 2, h2 / 100), [funcOrigin(t) for t in arange(1, 2, h2 / 100)], color="#000000", label="origin")
 plot.legend()
 plot.show()
