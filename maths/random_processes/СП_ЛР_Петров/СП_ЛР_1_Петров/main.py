@@ -111,10 +111,9 @@ def task4(P, r):
                     R += 1
             v = R / n
             delta = fabs(v - r[i])
-            if n <= 16:
-                r_i_n.append(R)
-                v_i_n.append(round(v, 5))
-                deltas.append(round(delta,5))
+            r_i_n.append(R)
+            v_i_n.append(round(v, 5))
+            deltas.append(round(delta,5))
 
         print("V: ", v_i_n)
         print("R: ", r_i_n)
