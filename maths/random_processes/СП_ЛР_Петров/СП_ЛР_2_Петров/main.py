@@ -27,7 +27,8 @@ def save_table_to_docx(data):
 	doc.save(file_name)
 
 
-A = [[-3, 0, 1, 1, 1], [1, -3, 0, 1, 1], [0, 1, -2, 1, 0], [1, 1, 1, -3, 0], [0, 1, 1, 1, -3]]
+# A = [[-3, 0, 1, 1, 1], [1, -3, 0, 1, 1], [0, 1, -2, 1, 0], [1, 1, 1, -3, 0], [0, 1, 1, 1, -3]]
+A = [[-3, 0, 1, 1, 1], [1, -3, 0, 1, 1], [0, 1, -2, 1, 0], [1, 0, 1, -3, 1], [1, 1, 1, 0, -3]]
 
 tmp = copy.deepcopy(A)
 tmp = np.transpose(copy.deepcopy(A))
@@ -78,7 +79,7 @@ while (delta_k is None) or (delta_k > 0.001):
 	table1.append([K-1, round(t_sob[-2], 5), new_state + 1, round(tau_l, 5), round(delta_k, 5)])
 
 
-delta_i_k = [ti_K[i] / ((t_sob[-1] - t_sob[0]) for i in range(len(A))]
+delta_i_k = [ti_K[i] / (t_sob[-1] - t_sob[0]) for i in range(len(A))]
 print(delta_i_k)
 
 vi_K = [i / (K-1) for i in ri_K]

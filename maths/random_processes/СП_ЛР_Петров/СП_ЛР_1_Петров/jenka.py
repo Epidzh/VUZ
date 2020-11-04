@@ -3,9 +3,31 @@ from numpy.linalg import matrix_power
 from numpy import matmul
 from math import fabs
 import copy
+import docx
+
 
 variant = 53
-matrix = np.array([[0.7, 0, 0.3], [0.135, 0.123, 0.742], [0.552, 0, 0.448]])
+matrix = np.array([[0.272, 0.146, 0.582], [0, 0.701, 0.299], [0, 0.49, 0.51]])
+
+def save_table_to_docx1(data, file_name):
+    try:
+        doc = docx.Document(file_name)
+    except docx.opc.exceptions.PackageNotFoundError:
+        doc = docx.Document()
+    table = doc.add_table(rows=len(data), cols=len(data[0]))
+    table.style = 'Table Grid'
+    i, j = 0, 0
+    for row in data:
+        for item in row:
+            if item is float:
+                table.rows[i].cells[j].text = item
+            else:
+                table.rows[i].cells[j].text = str(item)
+            j += 1
+        i += 1
+        j = 0
+    doc.add_paragraph()
+    doc.save(file_name)
 
 
 def convert_float(num):
@@ -14,7 +36,7 @@ def convert_float(num):
 
 def getMatrixes1(matrix):
     ans = [matrix]
-    deltas = []
+    deltas = ["-"]
     matrix_old = matrix
     delta = 0.00001
     delta_k = 0
@@ -27,17 +49,27 @@ def getMatrixes1(matrix):
         for i in range(len(matrix)):
             delta_k = max(delta_k, max([fabs(matrix_new[i][k] - matrix_old[i][k]) for k in range(len(matrix))]))
         matrix_old = matrix_new
-        deltas.append(delta_k)
+        deltas.append("%.6f" % delta_k)
+
+    for k in range(len(ans)):
+        for i in range(len(ans[-1])):
+            for j in range(len(ans[-1])):
+                ans[k][i][j] = "%.6f" % (ans[k][i][j])
+    # print(ans)
     return [ans, n, deltas, ans[-1]]
 
 
 matrixes, n, deltas, final_matrix = getMatrixes1(matrix)
-print(n)
-for i in matrixes:
-    print(i)
-    print()
+# print(n)
 
-print(deltas)
+tmp = []
+for index, item in enumerate(matrixes):
+    tmp.append([index + 1])
+    tmp[-1].append(item)
+    tmp[-1].append(deltas[index])
+# print(tmp)
+
+save_table_to_docx1(tmp, "tables.docx")
 
 
 # r = [46 / 71, 0, 25 / 71]
@@ -47,9 +79,7 @@ for i in range(3):
     tmp[i][i] -= 1
 tmp = np.append(tmp, [[1, 1, 1]], axis=0)
 r = np.linalg.solve(tmp[1:4], [0,0,1])
-print("r: ", r)
-print(tmp)
-print(tmp[1:4])
+print("r = ", r)
 
 
 def getMatrixes3(matrix, vector, r):
@@ -73,17 +103,38 @@ print(vectors)
 print(m_min)
 print(deltas)
 
+tmp = []
+for index, item in enumerate(vectors):
+    tmp.append([index])
+    tmp[-1].append([round(i, 6) for i in item])
+    tmp[-1].append(round(deltas[index], 6))
+save_table_to_docx1(tmp, "tables.docx")
+
 vectors, m_min, deltas = getMatrixes3(matrix, [0, 1, 0], r)
 print("010:")
 print(vectors)
 print(m_min)
 print(deltas)
 
+tmp = []
+for index, item in enumerate(vectors):
+    tmp.append([index])
+    tmp[-1].append([round(i, 6) for i in item])
+    tmp[-1].append(round(deltas[index], 6))
+save_table_to_docx1(tmp, "tables.docx")
+
 vectors, m_min, deltas = getMatrixes3(matrix, [0, 0, 1], r)
 print("001:")
 print(vectors)
 print(m_min)
 print(deltas)
+
+tmp = []
+for index, item in enumerate(vectors):
+    tmp.append([index])
+    tmp[-1].append([round(i, 6) for i in item])
+    tmp[-1].append(round(deltas[index], 6))
+save_table_to_docx1(tmp, "tables.docx")
 
 
 def task4(P, r):
@@ -120,5 +171,13 @@ def task4(P, r):
         print("V: ", v_i_n)
         print("R: ", r_i_n)
         n_min.append(n)
+        tmp = []
+        for index, item in enumerate(v_i_n):
+            tmp.append([index+1])
+            tmp[-1].append(r_i_n[index])
+            tmp[-1].append(v_i_n[index])
+            tmp[-1].append(deltas[index])
+
+        save_table_to_docx1(tmp, "tables.docx")
     print('N_min: ', n_min)
 task4(matrix, r)
