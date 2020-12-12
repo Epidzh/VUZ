@@ -43,24 +43,26 @@ void display()
 
     GLfloat colors[][3] = {
         {1, 0, 0},
-        {0, 1, 0},
+        {0.3, 0, 1},
         {0, 0, 1},
-        {1, 1, 0},
-        {1, 0, 1}
+        {0, 1, 0},
+        {1, 0.7, 0}
     };
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    glBegin(GL_TRIANGLES);
-    for (int i = 0; i < 5; i++){
+    int i = 0;
+    glBegin(GL_TRIANGLE_FAN);
+    for (i = 0; i < 5; i++){
         GLfloat material[] = {colors[i][0], colors[i][1], colors[i][2], 1.0};
-        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material);
-        glColor3d(colors[i][0], colors[i][1], colors[i][2]);
-        glVertex3f(0.0, 0.0, 0.0);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, material);
         glVertex3f(points[i][0], points[i][1], points[i][2]);
-        glVertex3f(points[(i + 1) % 5][0], points[(i + 1) % 5][1], points[(i + 1) % 5][2]);
     }
+    i = 0;
+    GLfloat normX = (points[i][1] * points[(i+1)%5][2]) - (points[i][2] * points[(i+1)%5][1]);
+    GLfloat normY = (points[i][2] * points[(i+1)%5][0]) - (points[i][0] * points[(i+1)%5][2]);
+    GLfloat normZ = (points[i][0] * points[(i+1)%5][1]) - (points[i][1] * points[(i+1)%5][2]);
+    glNormal3f(-normX, -normY, -normZ);
     glEnd();
 
     glutSwapBuffers();

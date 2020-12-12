@@ -8,30 +8,8 @@
     #include <GL/glut.h>
 #endif
 
-#include <iostream>
-#include <math.h>
-
-
-float alpha = 0;
-GLfloat camera_x = 2.28825*cos(alpha);
-GLfloat camera_y = 0.87403*sin(alpha);
-GLfloat camera_z = 20.0f;
-GLfloat translate_coords[] = {1.0, 1.0, 5.0};
-GLdouble points[][3] = {
-    {3.0, 0.0, 0},
-    {0.0, 3.0, 0},
-    {-3.0, 0.0, 0},
-    {-1.0, -3.0, 0},
-    {1.0, -3.0, 0}
-};
-
-GLfloat colors[][3] = {
-    {1, 0, 0},
-    {0, 1, 0},
-    {0, 0, 1},
-    {1, 1, 0},
-    {1, 0, 1}
-};
+#include "main.hpp"
+#include "geometry.cpp"
 
 
 void init()
@@ -39,6 +17,7 @@ void init()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(130, 1, 0.1, 1000);
@@ -55,38 +34,8 @@ void setCamera() {
 void setLight() {
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    GLfloat light_direction[] = {1.0, 1.0, 1.0};
+    GLfloat light_direction[] = {0.0, 0.0, 1.0};
     glLightfv(GL_LIGHT0, GL_POSITION, light_direction);
-}
-
-void drawTriangles() {
-    glBegin(GL_TRIANGLES);
-    for (int i = 0; i < 5; i++){
-        GLfloat material[] = {colors[i][0], colors[i][1], colors[i][2], 1.0};
-        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material);
-        glColor3d(colors[i][0], colors[i][1], colors[i][2]);
-        glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(points[i][0], points[i][1], points[i][2]);
-        glVertex3f(points[(i + 1) % 5][0], points[(i + 1) % 5][1], points[(i + 1) % 5][2]);
-    }
-    glEnd();
-}
-
-void drawQuads() {
-    glBegin(GL_QUADS);
-    for (int i = 0; i < 5; i++){
-        GLfloat material[] = {colors[i][0], colors[i][1], colors[i][2], 1.0};
-        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, material);
-        glColor3d(colors[i][0], colors[i][1], colors[i][2]);
-        
-        glVertex3f(points[i][0], points[i][1], points[i][2]);
-        glVertex3f(points[(i + 1) % 5][0], points[(i + 1) % 5][1], points[(i + 1) % 5][2]);
-        glVertex3f(points[(i + 1) % 5][0] + translate_coords[0], points[(i + 1) % 5][1] + translate_coords[1], points[(i + 1) % 5][2] + translate_coords[2]);
-        glVertex3f(points[i][0] + translate_coords[0], points[i][1] + translate_coords[1], points[i][2] + translate_coords[2]);
-    }
-    glEnd();
 }
 
 void display()
@@ -94,12 +43,13 @@ void display()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     
-    drawTriangles();
+    drawBase();
     glPushMatrix();
     glTranslated(translate_coords[0], translate_coords[1], translate_coords[2]);
-    drawTriangles();
+    drawBase();
     glPopMatrix();
     drawQuads();
+    glPopMatrix();
     glutSwapBuffers();
 }
 

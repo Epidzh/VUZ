@@ -1,8 +1,8 @@
-//
-//  data.cpp
-//  Task5
-//
-//  Created by Сергей Петров on 10.12.2020.
-//
+#include "data.h"
 
-#include <stdio.h>
+Point::Point (double x_, double y_, double z_) {
+    x = x_;
+    y = y_;
+    z = z_;
+}
+

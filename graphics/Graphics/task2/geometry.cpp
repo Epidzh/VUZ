@@ -1,12 +1,3 @@
-//
-//  geometry.hpp
-//  Graphics
-//
-//  Created by Сергей Петров on 07.12.2020.
-//
-
-#ifndef geometry_h
-#define geometry_h
 
 void drawBase() {
     int i = 0;
@@ -53,5 +44,3 @@ void drawQuads() {
     }
     glEnd();
 }
-
-#endif /* geometry_h */

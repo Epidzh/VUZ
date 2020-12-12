@@ -1,13 +1,12 @@
-//
-//  averagePointClipping.hpp
-//  Task5
-//
-//  Created by Сергей Петров on 10.12.2020.
-//
-
 #ifndef averagePointClipping_hpp
 #define averagePointClipping_hpp
 
-#include <stdio.h>
+#include "data.h"
+#include <vector>
 
-#endif /* averagePointClipping_hpp */
+class AveragePointClipping {
+private:
+    std::vector<Section> solve(std::vector<Section> sections);
+};
+
+#endif /* averagePointClipping_h */
