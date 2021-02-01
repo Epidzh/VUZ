@@ -46,7 +46,7 @@ void display()
     
     drawBase();
     glPushMatrix();
-    glTranslated(translate_coords[0], translate_coords[1], translate_coords[2]);
+    glTranslated(translate[0], translate[1], translate[2]);
     drawBase();
     glPopMatrix();
     drawQuads();
@@ -56,7 +56,7 @@ void display()
     
     drawBase();
     glPushMatrix();
-    glTranslated(translate_coords[0], translate_coords[1], translate_coords[2]);
+    glTranslated(translate[0], translate[1], translate[2]);
     drawBase();
     glPopMatrix();
     drawQuads();

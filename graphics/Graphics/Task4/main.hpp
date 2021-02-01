@@ -13,7 +13,7 @@ GLfloat camera_x = 2.28825 * cos(alpha);
 GLfloat camera_y = 0.87403 * sin(alpha);
 GLfloat camera_z = 15.0f;
 
-GLfloat translate_coords[] = {1.0, 1.0, 5.0};
+GLfloat translate[] = {1.0, 1.0, 5.0};
 GLdouble points[][3] = {
     {3.0, 0.0, 0},
     {0.0, 3.0, 0},

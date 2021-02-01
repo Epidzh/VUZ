@@ -18,7 +18,7 @@ struct Coord {
 float alpha = 0;
 GLuint texture;
 Coord cameraPosition = Coord(2.28825 * cos(alpha), 0.87403 * sin(3*alpha), 8.0);
-Coord translate_coords = Coord(1.0, 1.0, 3.0);
+Coord translate = Coord(1.0, 1.0, 3.0);
 std::vector<Coord> points = {
     Coord(3.0, 0.0, 0),
     Coord(0.0, 3.0, 0),

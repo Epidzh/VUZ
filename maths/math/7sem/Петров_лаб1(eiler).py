@@ -6,7 +6,7 @@ import matplotlib.pyplot as plot
 h1, h2 = 0.1, 0.01
 
 
-# исзодная функция (вариант 3)
+# исходная функция (вариант 3)
 def func(x, y):
 		return (y / x**2) + exp(x - 1 / x)
 

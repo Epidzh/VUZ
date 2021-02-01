@@ -39,7 +39,7 @@ def get_free_device_num(devices):
 control = 0
 from math import fabs
 while fabs(control - 1) > 0.00001:
-	L, u = 7.18, 3.17
+	L, u = 1/5.585, 1/2.55
 
 	count1, count2 = 0, 0
 	K = 2
@@ -111,6 +111,7 @@ print(table1)
 print(table2)
 print(table3)
 print(len(table1))
+print("Всего задач: ", count1, "Завершено: ", count2)
 save_table_to_docx(table1[:100])
 save_table_to_docx(table1[970:])
 save_table_to_docx(table2)

@@ -5,7 +5,8 @@ from math import fabs
 import copy
 
 variant = 53
-matrix = np.array([[0.7, 0, 0.3], [0.135, 0.123, 0.742], [0.552, 0, 0.448]])
+# matrix = np.array([[0.7, 0, 0.3], [0.135, 0.123, 0.742], [0.552, 0, 0.448]])
+matrix = np.array([[0.292, 0.708, 0], [0.538, 0.462, 0], [0.238, 0.359, 0.403]])
 
 
 def convert_float(num):

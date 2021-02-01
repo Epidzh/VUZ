@@ -32,13 +32,13 @@ void drawQuads() {
         
         GLfloat x1 = points[i].x;
         GLfloat x2 = points[(i+1)%5].x;
-        GLfloat x3 = points[i].x + translate_coords.x;
+        GLfloat x3 = points[i].x + translate.x;
         GLfloat y1 = points[i].y;
         GLfloat y2 = points[(i+1)%5].y;
-        GLfloat y3 = points[i].y + translate_coords.y;
+        GLfloat y3 = points[i].y + translate.y;
         GLfloat z1 = points[i].z;
         GLfloat z2 = points[(i+1)%5].z;
-        GLfloat z3 = points[i].z + translate_coords.z;
+        GLfloat z3 = points[i].z + translate.z;
         GLfloat normX = (y1 - y2)*(z1 - z3) - (z1 - z2)*(y1 - y3);
         GLfloat normY = (z1 - z2)*(x1 - x3) - (x1 - x2)*(z1 - z3);
         GLfloat normZ = (x1 - x2)*(y1 - y3) - (y1 - y2)*(x1 - x3);
@@ -48,7 +48,7 @@ void drawQuads() {
         glTexCoord2d(1,0);
         glVertex3f(x2, y2, z2);
         glTexCoord2d(0,1);
-        glVertex3f(points[(i + 1) % 5].x + translate_coords.x, points[(i + 1) % 5].y + translate_coords.y, points[(i + 1) % 5].z + translate_coords.z);
+        glVertex3f(points[(i + 1) % 5].x + translate.x, points[(i + 1) % 5].y + translate.y, points[(i + 1) % 5].z + translate.z);
         glTexCoord2d(1,1);
         glVertex3f(x3, y3, z3);
         

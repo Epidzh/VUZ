@@ -27,8 +27,7 @@ def save_table_to_docx(data):
 	doc.save(file_name)
 
 
-# A = [[-3, 0, 1, 1, 1], [1, -3, 0, 1, 1], [0, 1, -2, 1, 0], [1, 1, 1, -3, 0], [0, 1, 1, 1, -3]]
-A = [[-3, 0, 1, 1, 1], [1, -3, 0, 1, 1], [0, 1, -2, 1, 0], [1, 0, 1, -3, 1], [1, 1, 1, 0, -3]]
+A = [[-2, 0, 0, 1, 1], [0, -3, 1, 1, 1], [1, 0,-3, 1, 1], [1, 1, 0, -3, 1], [1, 1, 1, 0, -3]]
 
 tmp = copy.deepcopy(A)
 tmp = np.transpose(copy.deepcopy(A))
@@ -57,7 +56,6 @@ while (delta_k is None) or (delta_k > 0.001):
 	k_states = [i[0] for i in enumerate(A[state]) if i[1] > 0]
 	lambda_i = -A[state][state]
 	alpha = np.random.random_sample()
-	# print("aplha"alpha)
 	new_state = 0
 	t = 1 / lambda_i
 	while alpha > t:
@@ -67,14 +65,11 @@ while (delta_k is None) or (delta_k > 0.001):
 	new_state = k_states[new_state]
 	ri_K[new_state] = ri_K[new_state] + 1
 
-	tau_l = np.random.exponential(scale= - A[new_state][new_state])
+	tau_l = np.random.exponential(scale= -1 / A[new_state][new_state])
 	t_sob.append(t_sob[-1] + tau_l)
 	ti_K[new_state] += tau_l
 
 	state = new_state
-	# delta_k = max([fabs((ri_K[i] / K) - (prev_ri_K[i] / K)) for i in range(len(A))])
-	# for i in range(len(ri_K)):
-	# 	prev_ri_K[i] = ri_K[i]
 	delta_k = max([fabs((ri_K[i] / K) - (ri_K[i] / (K - 1))) for i in range(len(A))])
 	table1.append([K-1, round(t_sob[-2], 5), new_state + 1, round(tau_l, 5), round(delta_k, 5)])
 

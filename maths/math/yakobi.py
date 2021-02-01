@@ -21,7 +21,6 @@ def get_new_A(m_list):
         res = tmp
     return res
 
-
 eps = 0.01
 print("Погрешность:", eps)
 A = [

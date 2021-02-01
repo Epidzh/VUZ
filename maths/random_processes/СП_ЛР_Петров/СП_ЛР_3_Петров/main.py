@@ -35,7 +35,7 @@ def save_table_to_docx(data):
 	doc.save(file_name)
 
 
-pn1, pn2, pm1, gamma1, gamma2 = 0.189, 0.441, 0.690, 0.53, 0.36
+pn1, pn2, pm1, gamma1, gamma2 = 0.163, 0.379, 0.201, 0.38, 0.30
 pn11 = 1 - pn1 - pn2
 pm0 = 1 - pm1
 table1, table2, table3, table4, table5 = [], [], [], [], []
@@ -184,7 +184,7 @@ for i in states:
 		if state == i:
 			time += wait
 	table5.append([i, states[i], states[i] / 100, time])
-	table5[-1].append(table5[-1][-1] / table1[-1][1])
+	table5[-1].append(table5[-1][-1] / (table1[-1][1] + table1[-1][-3]))
 	sm1 += table5[-1][1]
 	sm2 += table5[-1][2]
 	sm3 += table5[-1][3]

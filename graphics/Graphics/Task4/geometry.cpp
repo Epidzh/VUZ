@@ -23,13 +23,13 @@ void drawQuads() {
         
         GLfloat x1 = points[i][0];
         GLfloat x2 = points[(i+1)%5][0];
-        GLfloat x3 = points[i][0] + translate_coords[0];
+        GLfloat x3 = points[i][0] + translate[0];
         GLfloat y1 = points[i][1];
         GLfloat y2 = points[(i+1)%5][1];
-        GLfloat y3 = points[i][1] + translate_coords[1];
+        GLfloat y3 = points[i][1] + translate[1];
         GLfloat z1 = points[i][2];
         GLfloat z2 = points[(i+1)%5][2];
-        GLfloat z3 = points[i][2] + translate_coords[2];
+        GLfloat z3 = points[i][2] + translate[2];
         GLfloat normX = (y1 - y2)*(z1 - z3) - (z1 - z2)*(y1 - y3);
         GLfloat normY = (z1 - z2)*(x1 - x3) - (x1 - x2)*(z1 - z3);
         GLfloat normZ = (x1 - x2)*(y1 - y3) - (y1 - y2)*(x1 - x3);
@@ -38,8 +38,8 @@ void drawQuads() {
         
         glVertex3f(points[i][0], points[i][1], points[i][2]);
         glVertex3f(points[(i + 1) % 5][0], points[(i + 1) % 5][1], points[(i + 1) % 5][2]);
-        glVertex3f(points[(i + 1) % 5][0] + translate_coords[0], points[(i + 1) % 5][1] + translate_coords[1], points[(i + 1) % 5][2] + translate_coords[2]);
-        glVertex3f(points[i][0] + translate_coords[0], points[i][1] + translate_coords[1], points[i][2] + translate_coords[2]);
+        glVertex3f(points[(i + 1) % 5][0] + translate[0], points[(i + 1) % 5][1] + translate[1], points[(i + 1) % 5][2] + translate[2]);
+        glVertex3f(points[i][0] + translate[0], points[i][1] + translate[1], points[i][2] + translate[2]);
         
         glNormal3f(normX, normY, normZ);
     }
